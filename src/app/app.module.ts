@@ -4,22 +4,21 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { MyAppComponent } from './app.component';
+import { TodoListPageModule } from '../pages/todo-list/todo-list.module';
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage
+    MyAppComponent,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyAppComponent),
+    TodoListPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage
+    MyAppComponent,
   ],
   providers: [
     StatusBar,
