@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TodoItem } from '../../app/app.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import * as fromTodos from '../../app/todos/reducers';
+import { Todo } from '../../app/todos/models';
 
 @IonicPage()
 @Component({
@@ -10,30 +13,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class TodoListPage {
 
-  todos: TodoItem[] = [
-    {
-      title: 'Todo Item 1',
-      complete: false,
-    },
-    {
-      title: 'Todo Item 2',
-      complete: true,
-    },
-    {
-      title: 'Todo Item 3',
-      complete: false,
-    },
-  ];
   isAddingTodo: boolean = false;
   todo: FormGroup;
+  todos$: Observable<Todo[]>;
+  todos: Todo[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
+    private store: Store<fromTodos.State>,
   ) {
+    this.todos$ = store.select(fromTodos.getTodos);
     this.todo = this.formBuilder.group({
       title: ['', Validators.required],
+    });
+
+    this.todos$.subscribe(value => {
+      this.todos = value;
     });
   }
 
@@ -43,12 +40,6 @@ export class TodoListPage {
 
   toggleAddTodo() {
     this.isAddingTodo = !this.isAddingTodo;
-  }
-
-  addTodo() {
-    const newTodo: TodoItem = { title: this.todo.value.title, complete: false };
-    this.todos.push(newTodo);
-    this.todo.reset();
   }
 
 }
