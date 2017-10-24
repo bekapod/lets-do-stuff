@@ -50,7 +50,7 @@ export const getTodosState = createFeatureSelector<State>('todos');
 
 export const getTodos = createSelector(
   getTodosState,
-  (state: State) => state.items,
+  (state: State) => state.items
 );
 
 export const getTodosSortedByCreated = createSelector(
