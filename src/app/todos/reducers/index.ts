@@ -41,6 +41,29 @@ export function reducer(state = initialState, action: any): State {
       };
     }
 
+    case todos.ADD_TODO: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case todos.ADD_TODO_SUCCEEDED: {
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    }
+
+    case todos.ADD_TODO_FAILED: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
     default:
       return state;
   }
@@ -55,5 +78,5 @@ export const getTodos = createSelector(
 
 export const getTodosSortedByCreated = createSelector(
   getTodos,
-  (items: TodoList) => items.length ? Object.keys(items).map(id => items[id]) : [],
+  (items: TodoList) => Object.keys(items) ? Object.keys(items).map(id => items[id]) : [],
 );

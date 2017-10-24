@@ -38,7 +38,8 @@ export class TodoListPage implements OnInit {
   }
 
   addTodo(todo: Todo) {
-    console.log(todo);
+    this.store.dispatch(new actions.AddTodo(todo));
+    this.isAddingTodo = false;
   }
 
 }

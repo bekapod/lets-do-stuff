@@ -7,6 +7,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { TodoListPage } from './todo-list';
 import * as fromRoot from '../../app/reducers';
 import * as fromTodos from '../../app/todos/reducers';
+import * as actions from '../../app/todos/actions';
+import { Todo } from '../../app/todos/models';
 import { NavMock, NavParamsMock } from '../../test-config/mocks-ionic';
 
 describe('TodoListPage', () => {
@@ -83,5 +85,22 @@ describe('TodoListPage', () => {
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css('todos-add'));
     expect(list).toBeTruthy();
+  });
+
+  it('should dispatch an ADD_TODO action and hide form when <todos-add> has been submitted', () => {
+    const newTodo: Todo = {
+      title: 'New todo',
+      created: 'Now',
+      complete: false,
+    };
+
+    instance.isAddingTodo = true;
+    fixture.detectChanges();
+
+    const addTodo = fixture.debugElement.query(By.css('todos-add'));
+    addTodo.triggerEventHandler('onTodoSubmitted', newTodo);
+
+    expect(store.dispatch).toBeCalledWith(new actions.AddTodo(newTodo));
+    expect(instance.isAddingTodo).toBe(false);
   });
 });
