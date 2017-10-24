@@ -1,20 +1,46 @@
-import { Todo } from '../models';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Todo, TodoList } from '../models';
+import * as todos from '../actions';
 
 export interface State {
-  todos: Todo[];
+  items: TodoList;
+  loading: boolean;
+  error: any;
 }
 
 const initialState: State = {
-  todos: [
-    { id: '1', title: 'Todo Item 1', complete: false },
-    { id: '2', title: 'Todo Item 2', complete: true },
-    { id: '3', title: 'Todo Item 3', complete: false },
-  ]
+  items: {},
+  loading: false,
+  error: null,
 };
 
 export function reducer(state = initialState, action: any): State {
   switch (action.type) {
+    case todos.FETCH_TODOS: {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    }
+
+    case todos.FETCH_TODOS_SUCCEEDED: {
+      return {
+        ...state,
+        items: action.payload,
+        loading: false,
+        error: null,
+      };
+    }
+
+    case todos.FETCH_TODOS_FAILED: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
     default:
       return state;
   }
@@ -24,5 +50,10 @@ export const getTodosState = createFeatureSelector<State>('todos');
 
 export const getTodos = createSelector(
   getTodosState,
-  state => state.todos
+  (state: State) => state.items,
+);
+
+export const getTodosSortedByCreated = createSelector(
+  getTodos,
+  (items: TodoList) => items.length ? Object.keys(items).map(id => items[id]) : [],
 );
