@@ -15,8 +15,8 @@ export class TodoListPage {
 
   isAddingTodo: boolean = false;
   todo: FormGroup;
-  todos$: Observable<Todo[]>;
   todos: Todo[];
+  private todos$: Observable<Todo[]>;
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +24,7 @@ export class TodoListPage {
     private formBuilder: FormBuilder,
     private store: Store<fromTodos.State>,
   ) {
-    this.todos$ = store.select(fromTodos.getTodos);
+    this.todos$ = this.store.select(fromTodos.getTodos);
     this.todo = this.formBuilder.group({
       title: ['', Validators.required],
     });
@@ -32,10 +32,6 @@ export class TodoListPage {
     this.todos$.subscribe(value => {
       this.todos = value;
     });
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TodoListPage');
   }
 
   toggleAddTodo() {

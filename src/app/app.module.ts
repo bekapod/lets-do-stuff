@@ -9,11 +9,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-
-import { MyAppComponent } from './app.component';
-import { TodoListPageModule } from '../pages/todo-list/todo-list.module';
 import { firebaseProps } from '../environment';
 import { metaReducers, reducers } from './reducers';
+
+import { MyAppComponent } from './app.component';
+import { TodosModule } from './todos/todos.module';
+import { TodoListPageModule } from '../pages/todo-list/todo-list.module';
 
 console.log(reducers, metaReducers);
 
@@ -34,6 +35,7 @@ export const firebaseConfig = {
     EffectsModule.forRoot([]),
     IonicModule.forRoot(MyAppComponent),
     StoreDevtoolsModule.instrument(),
+    TodosModule,
     TodoListPageModule,
   ],
   bootstrap: [IonicApp],

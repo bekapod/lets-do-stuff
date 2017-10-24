@@ -13,31 +13,18 @@ import {
  */
 import { storeFreeze } from 'ngrx-store-freeze';
 
-
-/**
- * Every reducer module's default export is the reducer function itself. In
- * addition, each module should export a type or interface that describes
- * the state of the reducer plus any selector functions. The `* as`
- * notation packages up all of the exports into a single object.
- */
-import * as fromTodos from '../todos/reducers';
-
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
-export interface State {
-  todos: fromTodos.State;
-}
+export interface State {}
 
 /**
  * Our state is composed of a map of action reducer functions.
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
-export const reducers: ActionReducerMap<State> = {
-  todos: fromTodos.reducer,
-};
+export const reducers: ActionReducerMap<State> = {};
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -55,8 +42,3 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * that will be composed to form the root meta-reducer.
  */
 export const metaReducers: MetaReducer<State>[] = [logger, storeFreeze];
-
-/**
- * Todos Reducers
- */
-export const getTodosState = createFeatureSelector<fromTodos.State>('todos');
