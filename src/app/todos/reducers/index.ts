@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Todo, TodoList } from '../models';
+import { TodoList } from '../models';
 import * as todos from '../actions';
 
 export interface State {

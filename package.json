@@ -11,7 +11,8 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@angular/common": "4.4.3",
@@ -53,6 +54,15 @@
     "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts",
     "transformIgnorePatterns": [
       "node_modules/(?!@ngrx|@ionic-native|@ionic)"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!<rootDir>/node_modules/",
+      "!src/test-config/*.ts",
+      "!src/**/effects/*.ts",
+      "!src/environment.ts",
+      "!src/**/*/*.module.ts",
+      "!src/app/main.ts"
     ]
   }
 }
