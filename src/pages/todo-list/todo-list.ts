@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -15,20 +14,15 @@ import { Todo } from '../../app/todos/models';
 export class TodoListPage implements OnInit {
 
   isAddingTodo: boolean = false;
-  todo: FormGroup;
   todos: Todo[];
   private todos$: Observable<Todo[]>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private formBuilder: FormBuilder,
     private store: Store<fromTodos.State>,
   ) {
     this.todos$ = this.store.select(fromTodos.getTodosSortedByCreated);
-    this.todo = this.formBuilder.group({
-      title: ['', Validators.required],
-    });
 
     this.todos$.subscribe(value => {
       this.todos = value;
@@ -41,6 +35,10 @@ export class TodoListPage implements OnInit {
 
   toggleAddTodo() {
     this.isAddingTodo = !this.isAddingTodo;
+  }
+
+  addTodo(todo: Todo) {
+    console.log(todo);
   }
 
 }

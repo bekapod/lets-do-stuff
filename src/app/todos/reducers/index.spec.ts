@@ -1,7 +1,6 @@
 import * as fromTodos from './index';
 import * as actions from '../actions';
 import { TodoList } from '../models/';
-import { createSelector } from '@ngrx/store';
 
 describe('Todos Reducer', () => {
   const initialState: fromTodos.State = {

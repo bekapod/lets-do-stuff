@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
+import { TodosModule } from '../../app/todos/todos.module';
 import { TodoListPage } from './todo-list';
 
 @NgModule({
@@ -8,6 +9,7 @@ import { TodoListPage } from './todo-list';
   ],
   imports: [
     IonicPageModule.forChild(TodoListPage),
+    TodosModule,
   ],
 })
 export class TodoListPageModule {}

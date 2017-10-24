@@ -13,10 +13,7 @@ import { firebaseProps } from '../environment';
 import { metaReducers, reducers } from './reducers';
 
 import { MyAppComponent } from './app.component';
-import { TodosModule } from './todos/todos.module';
 import { TodoListPageModule } from '../pages/todo-list/todo-list.module';
-
-console.log(reducers, metaReducers);
 
 export const firebaseConfig = {
   ...firebaseProps
@@ -33,9 +30,8 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
-    IonicModule.forRoot(MyAppComponent),
     StoreDevtoolsModule.instrument(),
-    TodosModule,
+    IonicModule.forRoot(MyAppComponent),
     TodoListPageModule,
   ],
   bootstrap: [IonicApp],

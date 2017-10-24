@@ -14,35 +14,9 @@
 
 
 <ion-content padding>
-  <form [formGroup]="todo" (ngSubmit)="addTodo()" *ngIf="isAddingTodo">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-10>
-          <ion-input
-            formControlName="title"
-            placeholder="What do you want to do?"
-          ></ion-input>
-        </ion-col>
-        <ion-col col-2 text-end>
-          <button
-            type="submit"
-            ion-button
-            icon-only
-            [disabled]="!todo.valid"
-          >
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+  <todos-add *ngIf="isAddingTodo" (onTodoSubmitted)="addTodo($event)"></todos-add>
 
-  <ion-list class="todos-list">
-    <ion-item *ngFor="let todo of todos">
-      <ion-label>{{ todo.title }}</ion-label>
-      <ion-checkbox [checked]="todo.complete"></ion-checkbox>
-    </ion-item>
-  </ion-list>
+  <todos-list [todos]="todos"></todos-list>
 
   <ion-fab bottom center>
     <button ion-fab title="Add todo" color="primary" (click)="toggleAddTodo()" *ngIf="!isAddingTodo">

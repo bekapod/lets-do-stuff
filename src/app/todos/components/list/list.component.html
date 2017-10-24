@@ -1,0 +1,6 @@
+<ion-list class="todos-list">
+  <ion-item *ngFor="let todo of todos">
+    <ion-label>{{ todo.title }}</ion-label>
+    <ion-checkbox [checked]="todo.complete"></ion-checkbox>
+  </ion-item>
+</ion-list>
