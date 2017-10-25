@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Todo } from '../models';
+import { Todo, TodoList } from '../models';
 
 export const FETCH_TODOS = '[Todos] Fetch';
 export const FETCH_TODOS_SUCCEEDED = '[Todos] Fetch: Succeeded';

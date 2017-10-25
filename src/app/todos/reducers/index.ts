@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { TodoList } from '../models';
+import { pathOr } from 'ramda';
+import { Todo, TodoList } from '../models';
 import * as todos from '../actions';
 
 export interface State {
@@ -76,7 +77,21 @@ export const getTodos = createSelector(
   (state: State) => state.items
 );
 
-export const getTodosSortedByCreated = createSelector(
-  getTodos,
-  (items: TodoList) => Object.keys(items) ? Object.keys(items).map(id => items[id]) : [],
+export const mapToArray = (items: TodoList) => (
+  pathOr(false, ['length'], Object.keys(items)) ? Object.keys(items).map(id => items[id]) : []
 );
+
+export const sortByCreated = (todos: Todo[]) => (
+  [...todos].sort((a, b) => parseInt(a.created, 10) - parseInt(b.created, 10))
+);
+
+export const getTodosAsArray = createSelector(
+  getTodos,
+  (items: TodoList) => mapToArray(items),
+);
+
+export const getTodosSortedByCreated = createSelector(
+  getTodosAsArray,
+  (todos: Todo[]) => sortByCreated(todos),
+);
+

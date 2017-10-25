@@ -8,7 +8,7 @@ import { TodoListPage } from './todo-list';
 import * as fromRoot from '../../app/reducers';
 import * as fromTodos from '../../app/todos/reducers';
 import * as actions from '../../app/todos/actions';
-import { Todo } from '../../app/todos/models';
+import { Todo, TodoList } from '../../app/todos/models';
 import { NavMock, NavParamsMock } from '../../test-config/mocks-ionic';
 
 describe('TodoListPage', () => {
@@ -48,6 +48,21 @@ describe('TodoListPage', () => {
 
   it('should create the todo list page', () => {
     expect(instance).toBeTruthy();
+  });
+
+  it('should fetch todos when initialised', () => {
+    expect(store.dispatch).toBeCalledWith(new actions.FetchTodos());
+  });
+
+  it('should have new todos sorted by date when todos have been fetched', () => {
+    const todoList: TodoList = {
+      '1': { title: 'Todo 1', complete: false, created: '1508925020343' },
+      '2': { title: 'Todo 2', complete: false, created: '1508925045342' },
+      '3': { title: 'Todo 3', complete: false, created: '1508925037299' },
+    };
+    store.dispatch(new actions.FetchTodosSucceeded(todoList));
+    fixture.detectChanges();
+    expect(instance.todos).toEqual([todoList['1'], todoList['3'], todoList['2']]);
   });
 
   it('should show a title', () => {
