@@ -6,13 +6,11 @@ import * as todos from '../actions';
 export interface State {
   items: TodoList;
   loading: boolean;
-  error: any;
 }
 
 const initialState: State = {
   items: {},
   loading: false,
-  error: null,
 };
 
 export function reducer(state = initialState, action: any): State {
@@ -21,7 +19,6 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     }
 
@@ -30,7 +27,6 @@ export function reducer(state = initialState, action: any): State {
         ...state,
         items: action.payload,
         loading: false,
-        error: null,
       };
     }
 
@@ -45,7 +41,6 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         loading: false,
-        error: null,
       };
     }
 

@@ -6,7 +6,6 @@ describe('Todos Reducer', () => {
   const initialState: fromTodos.State = {
     items: {},
     loading: false,
-    error: null,
   };
 
   it('should set loading to true when FETCH_TODOS is dispatched', () => {
@@ -31,17 +30,6 @@ describe('Todos Reducer', () => {
       ...initialState,
       items: payload,
       loading: false,
-      error: null,
-    });
-  });
-
-  it('should add error to the state when FETCH_TODOS_FAILED is dispatched', () => {
-    const payload = 'An error occurred';
-    const action = new actions.FetchTodosFailed(payload);
-    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
-      ...initialState,
-      loading: false,
-      error: payload,
     });
   });
 
@@ -58,22 +46,11 @@ describe('Todos Reducer', () => {
     });
   });
 
-  it('should set loading to false and clear errors when ADD_TODO_SUCCEEDED is dispatched', () => {
+  it('should set loading to false when ADD_TODO_SUCCEEDED is dispatched', () => {
     const action = new actions.AddTodoSucceeded();
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
       loading: false,
-      error: null,
-    });
-  });
-
-  it('should add error to the state when FETCH_TODOS_FAILED is dispatched', () => {
-    const payload = 'An error occurred';
-    const action = new actions.AddTodoFailed(payload);
-    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
-      ...initialState,
-      loading: false,
-      error: payload,
     });
   });
 

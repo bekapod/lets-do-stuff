@@ -31,15 +31,15 @@ export class MyAppComponent {
       splashScreen.hide();
     });
 
+    this.successes$ = this.store.select(fromMessages.getSuccesses);
+    this.successes$.debounceTime(500).subscribe(this.showSuccesses.bind(this));
+
     this.errors$ = this.store.select(fromMessages.getErrors);
     this.errors$.debounceTime(500).subscribe(this.showErrors.bind(this));
-
-    this.successes$ = this.store.select(fromMessages.getSuccesses);
-    this.successes$.subscribe(this.showSuccesses.bind(this));
   }
 
   presentToast(messages: Messages, messageType: string) {
-    if (!messages.length) return;
+    if (!messages.length) return false;
 
     const message = messages.join('\n');
     const toast = this.toastCtrl.create({
@@ -54,14 +54,16 @@ export class MyAppComponent {
     });
 
     toast.present();
-  }
 
-  showErrors(messages: Messages) {
-    this.presentToast(messages, 'error');
+    return toast;
   }
 
   showSuccesses(messages: Messages) {
     this.presentToast(messages, 'success');
+  }
+
+  showErrors(messages: Messages) {
+    this.presentToast(messages, 'error');
   }
 }
 

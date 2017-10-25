@@ -125,3 +125,17 @@ export class NavParamsMock {
 
 export class DeepLinkerMock {
 }
+
+export class ToastControllerMock {
+  create(options) {
+    return this;
+  }
+
+  present() {
+    return true;
+  }
+
+  onDidDismiss(cb) {
+    return () => cb();
+  }
+}
