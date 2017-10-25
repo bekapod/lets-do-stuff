@@ -1,0 +1,22 @@
+<form [formGroup]="todo" (ngSubmit)="addTodo()">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+        <ion-input
+          formControlName="title"
+          placeholder="What do you want to do?"
+        ></ion-input>
+      </ion-col>
+      <ion-col col-2 text-end>
+        <button
+          type="submit"
+          ion-button
+          icon-only
+          [disabled]="!todo.valid"
+        >
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
