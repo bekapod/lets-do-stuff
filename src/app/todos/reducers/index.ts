@@ -34,14 +34,6 @@ export function reducer(state = initialState, action: any): State {
       };
     }
 
-    case todos.FETCH_TODOS_FAILED: {
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    }
-
     case todos.ADD_TODO: {
       return {
         ...state,
@@ -54,14 +46,6 @@ export function reducer(state = initialState, action: any): State {
         ...state,
         loading: false,
         error: null,
-      };
-    }
-
-    case todos.ADD_TODO_FAILED: {
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
       };
     }
 
