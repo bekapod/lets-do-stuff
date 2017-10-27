@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
+import * as rootMessages from '../../actions/messages';
 import * as todos from '../actions';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class TodoEffects {
             observer.next({ type: todos.FETCH_TODOS_SUCCEEDED, payload: items });
           }, error => {
             console.error(error);
-            observer.next({ type: todos.FETCH_TODOS_FAILED, payload: error });
+            observer.next({ type: rootMessages.ADD_ERROR, payload: error });
           });
       })
     ));
@@ -40,7 +41,7 @@ export class TodoEffects {
             observer.next({ type: todos.ADD_TODO_SUCCEEDED });
           })
           .catch((error: any) => {
-            observer.next({ type: todos.ADD_TODO_FAILED, payload: error });
+            observer.next({ type: rootMessages.ADD_ERROR, payload: error });
           });
       })
     ));
