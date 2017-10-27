@@ -9,6 +9,7 @@ import { MyAppComponent } from './app.component';
 import { TodoListPage } from '../pages/todo-list/todo-list';
 import * as fromRoot from './reducers';
 import * as fromMessages from './reducers/messages';
+import * as messageActions from './actions/messages';
 import { PlatformMock, SplashScreenMock, StatusBarMock, ToastControllerMock } from '../test-config/mocks-ionic';
 
 describe('MyAppComponent', () => {
@@ -41,6 +42,7 @@ describe('MyAppComponent', () => {
   beforeEach(() => {
     store = TestBed.get(Store);
     spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'dispatch').and.callThrough();
 
     fixture = TestBed.createComponent(MyAppComponent);
     instance = fixture.debugElement.componentInstance;
@@ -69,7 +71,7 @@ describe('MyAppComponent', () => {
       spyOn(instance, 'presentToast');
       instance.showSuccesses([message]);
 
-      expect(instance.presentToast).toBeCalledWith([message], 'success');
+      expect(instance.presentToast).toBeCalledWith([message], 'success', new messageActions.DeleteSuccess([message]));
     });
   });
 
@@ -79,15 +81,15 @@ describe('MyAppComponent', () => {
       spyOn(instance, 'presentToast');
       instance.showErrors([message]);
 
-      expect(instance.presentToast).toBeCalledWith([message], 'error');
+      expect(instance.presentToast).toBeCalledWith([message], 'error', new messageActions.DeleteError([message]));
     });
   });
 
   describe('presentToast', () => {
     it('should return a toast if messages is not empty', () => {
       spyOn(instance.toastCtrl, 'create').and.callThrough();
-      const message = 'This is a success message.';
-      instance.presentToast([message], 'error');
+      const message = 'This is an error message.';
+      instance.presentToast([message], 'error', new messageActions.DeleteError([message]));
 
       expect(instance.toastCtrl.create).toBeCalledWith({
         message,
@@ -99,9 +101,18 @@ describe('MyAppComponent', () => {
 
     it('should return false if messages is empty', () => {
       spyOn(instance.toastCtrl, 'create').and.callThrough();
-      instance.presentToast([], 'error');
+      instance.presentToast([], 'error', new messageActions.DeleteError([]));
 
       expect(instance.toastCtrl.create).not.toBeCalled();
+    });
+
+    it('should dispatch an action to remove the message once toast has been dismissed', () => {
+      const message = 'This is a success message.';
+      const action = new messageActions.DeleteSuccess([message]);
+      const toast = instance.presentToast([message], 'error', action);
+      toast.dismiss();
+
+      expect(store.dispatch).toBeCalledWith(action);
     });
   });
 });

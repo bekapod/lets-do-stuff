@@ -1,13 +1,13 @@
 import 'rxjs/add/operator/debounceTime';
+import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Platform, ToastController } from 'ionic-angular';
+import { Platform, Toast, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TodoListPage } from '../pages/todo-list/todo-list';
+import * as messageActions from './actions/messages';
 import * as fromMessages from './reducers/messages';
-import { Observable } from 'rxjs/Observable';
-import { Messages } from './reducers/messages';
 
 @Component({
   templateUrl: 'app.html'
@@ -38,8 +38,8 @@ export class MyAppComponent {
     this.errors$.debounceTime(500).subscribe(this.showErrors.bind(this));
   }
 
-  presentToast(messages: Messages, messageType: string) {
-    if (!messages.length) return false;
+  presentToast(messages: fromMessages.Messages, messageType: string, removeMessageAction): Toast {
+    if (!messages.length) return null;
 
     const message = messages.join('\n');
     const toast = this.toastCtrl.create({
@@ -50,7 +50,7 @@ export class MyAppComponent {
     });
 
     toast.onDidDismiss(() => {
-      console.log('toast gone');
+      this.store.dispatch(removeMessageAction);
     });
 
     toast.present();
@@ -58,12 +58,12 @@ export class MyAppComponent {
     return toast;
   }
 
-  showSuccesses(messages: Messages) {
-    this.presentToast(messages, 'success');
+  showSuccesses(messages: fromMessages.Messages) {
+    this.presentToast(messages, 'success', new messageActions.DeleteSuccess(messages));
   }
 
-  showErrors(messages: Messages) {
-    this.presentToast(messages, 'error');
+  showErrors(messages: fromMessages.Messages) {
+    this.presentToast(messages, 'error', new messageActions.DeleteError(messages));
   }
 }
 

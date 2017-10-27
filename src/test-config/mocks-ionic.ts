@@ -127,6 +127,8 @@ export class DeepLinkerMock {
 }
 
 export class ToastControllerMock {
+  dismissCb = () => {};
+
   create(options) {
     return this;
   }
@@ -135,7 +137,11 @@ export class ToastControllerMock {
     return true;
   }
 
+  dismiss() {
+    this.dismissCb();
+  }
+
   onDidDismiss(cb) {
-    return () => cb();
+    this.dismissCb = cb;
   }
 }

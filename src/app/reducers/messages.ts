@@ -1,5 +1,6 @@
-import * as messages from '../actions/messages';
+import { difference } from 'ramda';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import * as messages from '../actions/messages';
 
 export type Messages = any[];
 
@@ -8,7 +9,7 @@ export interface State {
   error: Messages;
 }
 
-export const initialState = {
+const initialState = {
   success: [],
   error: [],
 };
@@ -32,6 +33,20 @@ export function reducer(state = initialState, action: any): State {
           ...state.error,
           action.payload,
         ]
+      };
+    }
+
+    case messages.DELETE_SUCCESS: {
+      return {
+        ...state,
+        success: difference(state.success, action.payload),
+      };
+    }
+
+    case messages.DELETE_ERROR: {
+      return {
+        ...state,
+        error: difference(state.error, action.payload),
       };
     }
 
