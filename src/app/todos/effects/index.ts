@@ -4,6 +4,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as rootMessages from '../../actions/messages';
+import * as rootLoading from '../../actions/loading';
 import * as todos from '../actions';
 
 @Injectable()
@@ -18,13 +19,17 @@ export class TodoEffects {
     .ofType(todos.FETCH_TODOS)
     .switchMap(() => (
       Observable.create((observer) => {
+        observer.next({ type: rootLoading.SHOW });
+
         this.db.object('/todos')
           .valueChanges()
           .subscribe(items => {
             observer.next({ type: todos.FETCH_TODOS_SUCCEEDED, payload: items });
+            observer.next({ type: rootLoading.HIDE });
           }, error => {
             console.error(error);
             observer.next({ type: rootMessages.ADD_ERROR, payload: error });
+            observer.next({ type: rootLoading.HIDE });
           });
       })
     ));
@@ -35,13 +40,17 @@ export class TodoEffects {
     .map(action => action.payload)
     .switchMap(payload => (
       Observable.create((observer) => {
+        observer.next({ type: rootLoading.SHOW });
+
         this.db.object(`/todos/${this.db.createPushId()}`)
           .set(payload)
           .then(() => {
             observer.next({ type: todos.ADD_TODO_SUCCEEDED });
+            observer.next({ type: rootLoading.HIDE });
           })
           .catch((error: any) => {
             observer.next({ type: rootMessages.ADD_ERROR, payload: error });
+            observer.next({ type: rootLoading.HIDE });
           });
       })
     ));

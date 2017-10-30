@@ -1,27 +1,31 @@
-import 'rxjs/add/operator/debounceTime';
 import { Observable } from 'rxjs/Observable';
+import { StatusBar } from '@ionic-native/status-bar';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Platform, Toast, ToastController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
+import { Loading, LoadingController, Platform, Toast, ToastController } from 'ionic-angular';
+import 'rxjs/add/operator/debounceTime';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TodoListPage } from '../pages/todo-list/todo-list';
 import * as messageActions from './actions/messages';
 import * as fromMessages from './reducers/messages';
+import * as fromLoading from './reducers/loading';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyAppComponent {
   rootPage: any = TodoListPage;
+  loader: Loading = null;
   private errors$: Observable<any>;
   private successes$: Observable<any>;
+  private loading$: Observable<any>;
 
   constructor(
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
     private store: Store<fromMessages.State>,
   ) {
     platform.ready().then(() => {
@@ -36,6 +40,9 @@ export class MyAppComponent {
 
     this.errors$ = this.store.select(fromMessages.getErrors);
     this.errors$.debounceTime(500).subscribe(this.showErrors.bind(this));
+
+    this.loading$ = this.store.select(fromLoading.getIsLoading);
+    this.loading$.subscribe(this.toggleLoadingIndicator.bind(this));
   }
 
   presentToast(messages: fromMessages.Messages, messageType: string, removeMessageAction): Toast {
@@ -64,6 +71,31 @@ export class MyAppComponent {
 
   showErrors(messages: fromMessages.Messages) {
     this.presentToast(messages, 'error', new messageActions.DeleteError(messages));
+  }
+
+  createLoader(): Loading {
+    return this.loadingCtrl.create();
+  }
+
+  toggleLoadingIndicator(show: fromLoading.Loading) {
+    if (show) {
+      this.loader = this.createLoader();
+      this.presentLoadingIndicator(this.loader);
+      return;
+    }
+
+    if (this.loader !== null) {
+      this.dismissLoadingIndicator(this.loader);
+      this.loader = null;
+    }
+  }
+
+  presentLoadingIndicator(loader: Loading) {
+    loader.present();
+  }
+
+  dismissLoadingIndicator(loader: Loading) {
+    loader.dismiss();
   }
 }
 

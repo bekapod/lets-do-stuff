@@ -30,4 +30,4 @@ export class DeleteError implements Action {
   constructor(public payload: Messages) {}
 }
 
-export type Actions = AddSuccess | AddError;
+export type Actions = AddSuccess | AddError | DeleteSuccess | DeleteError;

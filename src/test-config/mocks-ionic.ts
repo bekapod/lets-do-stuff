@@ -145,3 +145,19 @@ export class ToastControllerMock {
     this.dismissCb = cb;
   }
 }
+
+export class LoadingMock {
+  present() {
+    return true;
+  }
+
+  dismiss() {
+    return true;
+  }
+}
+
+export class LoadingControllerMock {
+  create(options) {
+    return new LoadingMock();
+  }
+}

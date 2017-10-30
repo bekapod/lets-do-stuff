@@ -5,12 +5,10 @@ import * as todos from '../actions';
 
 export interface State {
   items: TodoList;
-  loading: boolean;
 }
 
 export const initialState: State = {
   items: {},
-  loading: false,
 };
 
 export function reducer(state = initialState, action: any): State {
@@ -18,7 +16,6 @@ export function reducer(state = initialState, action: any): State {
     case todos.FETCH_TODOS: {
       return {
         ...state,
-        loading: true,
       };
     }
 
@@ -26,21 +23,18 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         items: action.payload,
-        loading: false,
       };
     }
 
     case todos.ADD_TODO: {
       return {
         ...state,
-        loading: true,
       };
     }
 
     case todos.ADD_TODO_SUCCEEDED: {
       return {
         ...state,
-        loading: false,
       };
     }
 

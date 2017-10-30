@@ -9,7 +9,7 @@ export interface State {
   error: Messages;
 }
 
-const initialState = {
+export const initialState = {
   success: [],
   error: [],
 };

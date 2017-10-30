@@ -1,16 +1,22 @@
 
+import { MyAppComponent } from './app.component';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
-import { Platform, ToastController } from 'ionic-angular';
+import { Loading, LoadingController, Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { MyAppComponent } from './app.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TodoListPage } from '../pages/todo-list/todo-list';
 import * as fromRoot from './reducers';
 import * as fromMessages from './reducers/messages';
 import * as messageActions from './actions/messages';
-import { PlatformMock, SplashScreenMock, StatusBarMock, ToastControllerMock } from '../test-config/mocks-ionic';
+import {
+  LoadingControllerMock,
+  PlatformMock,
+  SplashScreenMock,
+  StatusBarMock,
+  ToastControllerMock,
+} from '../test-config/mocks-ionic';
 
 describe('MyAppComponent', () => {
   let fixture: ComponentFixture<MyAppComponent>;
@@ -35,6 +41,7 @@ describe('MyAppComponent', () => {
         { provide: StatusBar, useClass: StatusBarMock },
         { provide: SplashScreen, useClass: SplashScreenMock },
         { provide: ToastController, useClass: ToastControllerMock },
+        { provide: LoadingController, useClass: LoadingControllerMock },
       ]
     }).compileComponents();
   }));
@@ -113,6 +120,51 @@ describe('MyAppComponent', () => {
       toast.dismiss();
 
       expect(store.dispatch).toBeCalledWith(action);
+    });
+  });
+
+  describe('createLoader', () => {
+    it('should create a loader', () => {
+      spyOn(instance.loadingCtrl, 'create');
+      instance.createLoader();
+      expect(instance.loadingCtrl.create).toHaveBeenCalled();
+    });
+  });
+
+  describe('toggleLoadingIndicator', () => {
+    it('should create a loader and present it when show is true', () => {
+      spyOn(instance.loadingCtrl, 'create').and.callThrough();
+      spyOn(instance, 'presentLoadingIndicator');
+
+      instance.toggleLoadingIndicator(true);
+
+      expect(instance.loadingCtrl.create).toHaveBeenCalled();
+      expect(instance.presentLoadingIndicator).toHaveBeenCalled();
+    });
+
+    it('should call present on the loader when presented', () => {
+      const loader: Loading = instance.loadingCtrl.create();
+      spyOn(loader, 'present');
+
+      instance.presentLoadingIndicator(loader);
+      expect(loader.present).toHaveBeenCalled();
+    });
+
+    it('should dismiss the existing loader when show is false', () => {
+      spyOn(instance, 'dismissLoadingIndicator');
+
+      instance.loader = instance.loadingCtrl.create();
+      instance.toggleLoadingIndicator(false);
+
+      expect(instance.dismissLoadingIndicator).toHaveBeenCalled();
+    });
+
+    it('should call dismiss on the loader when dismissed', () => {
+      const loader: Loading = instance.loadingCtrl.create();
+      spyOn(loader, 'dismiss');
+
+      instance.dismissLoadingIndicator(loader);
+      expect(loader.dismiss).toHaveBeenCalled();
     });
   });
 });

@@ -5,15 +5,13 @@ import { Todo, TodoList } from '../models/';
 describe('Todos Reducer', () => {
   const initialState: fromTodos.State = {
     items: {},
-    loading: false,
   };
 
-  it('should set loading to true when FETCH_TODOS is dispatched', () => {
+  it('should not affect state when FETCH_TODOS is dispatched', () => {
     const action = new actions.FetchTodos();
 
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
-      loading: true,
     });
   });
 
@@ -29,11 +27,10 @@ describe('Todos Reducer', () => {
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
       items: payload,
-      loading: false,
     });
   });
 
-  it('should set loading to true when ADD_TODO is dispatched', () => {
+  it('should not affect state when ADD_TODO is dispatched', () => {
     const payload: Todo = {
       title: 'New todo',
       complete: false,
@@ -42,15 +39,13 @@ describe('Todos Reducer', () => {
     const action = new actions.AddTodo(payload);
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
-      loading: true,
     });
   });
 
-  it('should set loading to false when ADD_TODO_SUCCEEDED is dispatched', () => {
+  it('should not affect state when ADD_TODO_SUCCEEDED is dispatched', () => {
     const action = new actions.AddTodoSucceeded();
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
-      loading: false,
     });
   });
 
