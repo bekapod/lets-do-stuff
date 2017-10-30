@@ -42,8 +42,9 @@ export class TodoEffects {
       Observable.create((observer) => {
         observer.next({ type: rootLoading.SHOW });
 
-        this.db.object(`/todos/${this.db.createPushId()}`)
-          .set(payload)
+        const id = this.db.createPushId();
+        this.db.object(`/todos/${id}`)
+          .set({ ...payload, id })
           .then(() => {
             observer.next({ type: todos.ADD_TODO_SUCCEEDED });
             observer.next({ type: rootLoading.HIDE });

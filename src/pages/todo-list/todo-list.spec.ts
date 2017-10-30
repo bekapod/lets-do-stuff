@@ -50,15 +50,11 @@ describe('TodoListPage', () => {
     expect(instance).toBeTruthy();
   });
 
-  it('should fetch todos when initialised', () => {
-    expect(store.dispatch).toBeCalledWith(new actions.FetchTodos());
-  });
-
   it('should have new todos sorted by date when todos have been fetched', () => {
     const todoList: TodoList = {
-      '1': { title: 'Todo 1', complete: false, created: '1508925020343' },
-      '2': { title: 'Todo 2', complete: false, created: '1508925045342' },
-      '3': { title: 'Todo 3', complete: false, created: '1508925037299' },
+      '1': { id: '1', title: 'Todo 1', complete: false, created: '1508925020343' },
+      '2': { id: '2', title: 'Todo 2', complete: false, created: '1508925045342' },
+      '3': { id: '3', title: 'Todo 3', complete: false, created: '1508925037299' },
     };
     store.dispatch(new actions.FetchTodosSucceeded(todoList));
     fixture.detectChanges();
@@ -104,6 +100,7 @@ describe('TodoListPage', () => {
 
   it('should dispatch an ADD_TODO action and hide form when <todos-add> has been submitted', () => {
     const newTodo: Todo = {
+      id: null,
       title: 'New todo',
       created: 'Now',
       complete: false,

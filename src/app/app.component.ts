@@ -1,20 +1,20 @@
 import { Observable } from 'rxjs/Observable';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Loading, LoadingController, Platform, Toast, ToastController } from 'ionic-angular';
 import 'rxjs/add/operator/debounceTime';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { TodoListPage } from '../pages/todo-list/todo-list';
 import * as messageActions from './actions/messages';
+import * as todoActions from './todos/actions';
 import * as fromMessages from './reducers/messages';
 import * as fromLoading from './reducers/loading';
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyAppComponent {
-  rootPage: any = TodoListPage;
+export class MyAppComponent implements OnInit {
+  rootPage: any = 'TodoListPage';
   loader: Loading = null;
   private errors$: Observable<any>;
   private successes$: Observable<any>;
@@ -43,6 +43,10 @@ export class MyAppComponent {
 
     this.loading$ = this.store.select(fromLoading.getIsLoading);
     this.loading$.subscribe(this.toggleLoadingIndicator.bind(this));
+  }
+
+  ngOnInit() {
+    this.store.dispatch(new todoActions.FetchTodos());
   }
 
   presentToast(messages: fromMessages.Messages, messageType: string, removeMessageAction): Toast {

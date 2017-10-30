@@ -37,9 +37,9 @@ describe('ListComponent', () => {
 
   it('should render 3 ion-item\'s when 3 todos are passed', () => {
     const todos: Todo[] = [
-      { title: 'Item 1', complete: false, created: '' },
-      { title: 'Item 2', complete: false, created: '' },
-      { title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '' },
+      { id: '2', title: 'Item 2', complete: false, created: '' },
+      { id: '3', title: 'Item 3', complete: false, created: '' },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -50,9 +50,9 @@ describe('ListComponent', () => {
 
   it('should render the todo item\'s title inside an ion-label', () => {
     const todos: Todo[] = [
-      { title: 'Item 1', complete: false, created: '' },
-      { title: 'Item 2', complete: false, created: '' },
-      { title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '' },
+      { id: '2', title: 'Item 2', complete: false, created: '' },
+      { id: '3', title: 'Item 3', complete: false, created: '' },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -65,9 +65,9 @@ describe('ListComponent', () => {
 
   it('should set checked to false on uncompleted todo items', () => {
     const todos: Todo[] = [
-      { title: 'Item 1', complete: false, created: '' },
-      { title: 'Item 2', complete: true, created: '' },
-      { title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '' },
+      { id: '2', title: 'Item 2', complete: true, created: '' },
+      { id: '3', title: 'Item 3', complete: false, created: '' },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -79,9 +79,9 @@ describe('ListComponent', () => {
 
   it('should set checked to true on the completed todo items', () => {
     const todos: Todo[] = [
-      { title: 'Item 1', complete: false, created: '' },
-      { title: 'Item 2', complete: true, created: '' },
-      { title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '' },
+      { id: '2', title: 'Item 2', complete: true, created: '' },
+      { id: '3', title: 'Item 3', complete: false, created: '' },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -89,5 +89,21 @@ describe('ListComponent', () => {
     const items = fixture.debugElement.query(By.css('ion-list')).children;
     const completedCheckbox = items[1].query(By.css('ion-checkbox'));
     expect(completedCheckbox.properties['checked']).toBe(true);
+  });
+
+  it('should should emit an onTodoEdited event with the todo when edit button is clicked', () => {
+    spyOn(instance.onTodoEdited, 'emit').and.callThrough();
+
+    const todos: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: '' },
+      { id: '2', title: 'Item 2', complete: false, created: '' },
+      { id: '3', title: 'Item 3', complete: false, created: '' },
+    ];
+    instance.todos = todos;
+    fixture.detectChanges();
+
+    const button = fixture.debugElement.query(By.css('ion-item-sliding:nth-child(2) ion-item-options[side="right"] button.edit-todo'));
+    button.triggerEventHandler('click', null);
+    expect(instance.onTodoEdited.emit).toBeCalledWith(todos[1]);
   });
 });

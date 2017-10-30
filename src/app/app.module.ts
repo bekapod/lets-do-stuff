@@ -14,6 +14,7 @@ import { metaReducers, reducers } from './reducers';
 
 import { MyAppComponent } from './app.component';
 import { TodoListPageModule } from '../pages/todo-list/todo-list.module';
+import { TodoItemPageModule } from '../pages/todo-item/todo-item.module';
 
 export const firebaseConfig = {
   ...firebaseProps
@@ -33,6 +34,7 @@ export const firebaseConfig = {
     StoreDevtoolsModule.instrument(),
     IonicModule.forRoot(MyAppComponent),
     TodoListPageModule,
+    TodoItemPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

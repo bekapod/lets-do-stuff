@@ -17,9 +17,9 @@ describe('Todos Reducer', () => {
 
   it('should replace items with newly fetched items when FETCH_TODOS_SUCCEEDED is dispatched', () => {
     const payload: TodoList = {
-      1: { title: 'Item 1', complete: false, created: 'now' },
-      2: { title: 'Item 2', complete: false, created: 'now' },
-      3: { title: 'Item 3', complete: false, created: 'now' },
+      1: { id: '1', title: 'Item 1', complete: false, created: 'now' },
+      2: { id: '2', title: 'Item 2', complete: false, created: 'now' },
+      3: { id: '3', title: 'Item 3', complete: false, created: 'now' },
     };
 
     const action = new actions.FetchTodosSucceeded(payload);
@@ -32,6 +32,7 @@ describe('Todos Reducer', () => {
 
   it('should not affect state when ADD_TODO is dispatched', () => {
     const payload: Todo = {
+      id: null,
       title: 'New todo',
       complete: false,
       created: 'now',
@@ -52,9 +53,9 @@ describe('Todos Reducer', () => {
   describe('mapToArray', () => {
     it('should convert a TodoList into an array of Todo\'s', () => {
       const todoList: TodoList = {
-        '1': { title: 'Item 1', complete: false, created: '' },
-        '2': { title: 'Item 2', complete: false, created: '' },
-        '3': { title: 'Item 3', complete: false, created: '' },
+        '1': { id: '1', title: 'Item 1', complete: false, created: '' },
+        '2': { id: '2', title: 'Item 2', complete: false, created: '' },
+        '3': { id: '3', title: 'Item 3', complete: false, created: '' },
       };
 
       expect(fromTodos.mapToArray(todoList)).toEqual([
@@ -73,9 +74,9 @@ describe('Todos Reducer', () => {
   describe('sortByCreated', () => {
     it('should sort an array of Todo\'s by created date', () => {
       const todos: Todo[] = [
-        { title: 'Item 1', complete: false, created: '1508938705101' },
-        { title: 'Item 2', complete: false, created: '1508938682679' },
-        { title: 'Item 3', complete: false, created: '1508938695272' },
+        { id: '1', title: 'Item 1', complete: false, created: '1508938705101' },
+        { id: '2', title: 'Item 2', complete: false, created: '1508938682679' },
+        { id: '3', title: 'Item 3', complete: false, created: '1508938695272' },
       ];
 
       expect(fromTodos.sortByCreated(todos)).toEqual([

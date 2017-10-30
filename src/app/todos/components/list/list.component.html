@@ -1,6 +1,14 @@
 <ion-list class="todos-list">
-  <ion-item *ngFor="let todo of todos">
-    <ion-label>{{ todo.title }}</ion-label>
-    <ion-checkbox [checked]="todo.complete"></ion-checkbox>
-  </ion-item>
+  <ion-item-sliding *ngFor="let todo of todos">
+    <ion-item>
+      <ion-label>{{ todo.title }}</ion-label>
+      <ion-checkbox [checked]="todo.complete"></ion-checkbox>
+    </ion-item>
+
+    <ion-item-options side="right">
+      <button class="edit-todo" ion-button icon-only (click)="editTodo(todo)">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
 </ion-list>
