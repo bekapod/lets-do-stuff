@@ -9,7 +9,7 @@ import { TodoItemPage } from './todo-item';
 import * as fromRoot from '../../app/reducers';
 import * as fromTodos from '../../app/todos/reducers';
 import * as actions from '../../app/todos/actions';
-import { Todo, TodoList } from '../../app/todos/models';
+import { TodoList } from '../../app/todos/models';
 import { NavMock, NavParamsMock } from '../../test-config/mocks-ionic';
 
 describe('TodoItemPage', () => {
