@@ -70,6 +70,7 @@ describe('AddComponent', () => {
     const resetSpy = spyOn(instance.todo, 'reset');
     const form = fixture.debugElement.query(By.css('form'));
     const todo: Todo = {
+      id: null,
       title: 'Todo item',
       complete: false,
       created: 'MOCKED_DATE',

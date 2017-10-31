@@ -5,10 +5,12 @@ import * as todos from '../actions';
 
 export interface State {
   items: TodoList;
+  currentItem: string;
 }
 
 export const initialState: State = {
   items: {},
+  currentItem: null,
 };
 
 export function reducer(state = initialState, action: any): State {
@@ -22,7 +24,7 @@ export function reducer(state = initialState, action: any): State {
     case todos.FETCH_TODOS_SUCCEEDED: {
       return {
         ...state,
-        items: action.payload,
+        items: action.payload || state.items,
       };
     }
 
@@ -38,6 +40,25 @@ export function reducer(state = initialState, action: any): State {
       };
     }
 
+    case todos.SAVE_TODO: {
+      return {
+        ...state,
+      };
+    }
+
+    case todos.SAVE_TODO_SUCCEEDED: {
+      return {
+        ...state,
+      };
+    }
+
+    case todos.SET_CURRENT_TODO: {
+      return {
+        ...state,
+        currentItem: action.payload,
+      };
+    }
+
     default:
       return state;
   }
@@ -50,8 +71,17 @@ export const getTodos = createSelector(
   (state: State) => state.items
 );
 
+export const getCurrentTodo = createSelector(
+  getTodosState,
+  (state: State) => getTodoById(state, state.currentItem),
+);
+
+export const getTodoById = (state: State, id: string) => state.items[id];
+
 export const mapToArray = (items: TodoList) => (
-  pathOr(false, ['length'], Object.keys(items)) ? Object.keys(items).map(id => items[id]) : []
+  pathOr(false, ['length'], Object.keys(items))
+    ? Object.keys(items).map(id => ({ ...items[id], id }))
+    : []
 );
 
 export const sortByCreated = (todos: Todo[]) => (

@@ -5,6 +5,7 @@ import { Todo, TodoList } from '../models/';
 describe('Todos Reducer', () => {
   const initialState: fromTodos.State = {
     items: {},
+    currentItem: null,
   };
 
   it('should not affect state when FETCH_TODOS is dispatched', () => {
@@ -17,9 +18,9 @@ describe('Todos Reducer', () => {
 
   it('should replace items with newly fetched items when FETCH_TODOS_SUCCEEDED is dispatched', () => {
     const payload: TodoList = {
-      1: { title: 'Item 1', complete: false, created: 'now' },
-      2: { title: 'Item 2', complete: false, created: 'now' },
-      3: { title: 'Item 3', complete: false, created: 'now' },
+      1: { id: '1', title: 'Item 1', complete: false, created: 'now' },
+      2: { id: '2', title: 'Item 2', complete: false, created: 'now' },
+      3: { id: '3', title: 'Item 3', complete: false, created: 'now' },
     };
 
     const action = new actions.FetchTodosSucceeded(payload);
@@ -32,6 +33,7 @@ describe('Todos Reducer', () => {
 
   it('should not affect state when ADD_TODO is dispatched', () => {
     const payload: Todo = {
+      id: null,
       title: 'New todo',
       complete: false,
       created: 'now',
@@ -49,12 +51,40 @@ describe('Todos Reducer', () => {
     });
   });
 
+  it('should not affect state when SAVE_TODO is dispatched', () => {
+    const payload: Todo = {
+      id: null,
+      title: 'New todo',
+      complete: false,
+      created: 'now',
+    };
+    const action = new actions.SaveTodo(payload);
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when SAVE_TODO_SUCCEEDED is dispatched', () => {
+    const action = new actions.SaveTodoSucceeded();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should add the id of the current item to state when SET_CURRENT_TODO is dispatched', () => {
+    const action = new actions.SetCurrentTodo('item-id');
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+      currentItem: 'item-id',
+    });
+  });
+
   describe('mapToArray', () => {
     it('should convert a TodoList into an array of Todo\'s', () => {
       const todoList: TodoList = {
-        '1': { title: 'Item 1', complete: false, created: '' },
-        '2': { title: 'Item 2', complete: false, created: '' },
-        '3': { title: 'Item 3', complete: false, created: '' },
+        '1': { id: '1', title: 'Item 1', complete: false, created: '' },
+        '2': { id: '2', title: 'Item 2', complete: false, created: '' },
+        '3': { id: '3', title: 'Item 3', complete: false, created: '' },
       };
 
       expect(fromTodos.mapToArray(todoList)).toEqual([
@@ -73,9 +103,9 @@ describe('Todos Reducer', () => {
   describe('sortByCreated', () => {
     it('should sort an array of Todo\'s by created date', () => {
       const todos: Todo[] = [
-        { title: 'Item 1', complete: false, created: '1508938705101' },
-        { title: 'Item 2', complete: false, created: '1508938682679' },
-        { title: 'Item 3', complete: false, created: '1508938695272' },
+        { id: '1', title: 'Item 1', complete: false, created: '1508938705101' },
+        { id: '2', title: 'Item 2', complete: false, created: '1508938682679' },
+        { id: '3', title: 'Item 3', complete: false, created: '1508938695272' },
       ];
 
       expect(fromTodos.sortByCreated(todos)).toEqual([
@@ -83,6 +113,21 @@ describe('Todos Reducer', () => {
         todos[2],
         todos[0],
       ]);
+    });
+  });
+
+  describe('getTodoById', () => {
+    it('should retrieve the correct todo by the id passed in', () => {
+      const state: fromTodos.State = {
+        items: {
+          '1': { id: '1', title: 'Item 1', complete: false, created: '' },
+          '2': { id: '2', title: 'Item 2', complete: false, created: '' },
+          '3': { id: '3', title: 'Item 3', complete: false, created: '' },
+        },
+        currentItem: '2',
+      };
+
+      expect(fromTodos.getTodoById(state, '2')).toEqual(state.items['2']);
     });
   });
 });

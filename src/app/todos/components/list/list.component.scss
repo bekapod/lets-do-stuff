@@ -1,3 +1,5 @@
-list {
-
+todos-list {
+  ion-item-options .edit-todo:last-child {
+    padding-right: 0.3em;
+  }
 }

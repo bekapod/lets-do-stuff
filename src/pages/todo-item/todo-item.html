@@ -1,0 +1,10 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ todo?.title }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <todos-edit [todo]="todo" (onTodoEdited)="editTodo($event)"></todos-edit>
+</ion-content>

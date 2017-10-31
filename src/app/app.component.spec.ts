@@ -6,10 +6,10 @@ import { Loading, LoadingController, Platform, ToastController } from 'ionic-ang
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TodoListPage } from '../pages/todo-list/todo-list';
 import * as fromRoot from './reducers';
 import * as fromMessages from './reducers/messages';
 import * as messageActions from './actions/messages';
+import * as todoActions from './todos/actions';
 import {
   LoadingControllerMock,
   PlatformMock,
@@ -61,7 +61,11 @@ describe('MyAppComponent', () => {
   });
 
   it('should render the Todo List page', () => {
-    expect(instance.rootPage).toBe(TodoListPage);
+    expect(instance.rootPage).toBe('TodoListPage');
+  });
+
+  it('should fetch todos when initialised', () => {
+    expect(store.dispatch).toBeCalledWith(new todoActions.FetchTodos());
   });
 
   it('should get success messages when initialised', () => {
@@ -101,7 +105,7 @@ describe('MyAppComponent', () => {
       expect(instance.toastCtrl.create).toBeCalledWith({
         message,
         duration: 3000,
-        dismissOnPageChange: true,
+        dismissOnPageChange: false,
         cssClass: 'app-toast-error',
       });
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -6,12 +6,14 @@ import * as fromTodos from '../../app/todos/reducers';
 import * as actions from '../../app/todos/actions';
 import { Todo } from '../../app/todos/models';
 
-@IonicPage()
+@IonicPage({
+  segment: 'list',
+})
 @Component({
   selector: 'page-todo-list',
   templateUrl: 'todo-list.html',
 })
-export class TodoListPage implements OnInit {
+export class TodoListPage {
 
   isAddingTodo: boolean = false;
   todos: Todo[];
@@ -29,10 +31,6 @@ export class TodoListPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.store.dispatch(new actions.FetchTodos());
-  }
-
   toggleAddTodo() {
     this.isAddingTodo = !this.isAddingTodo;
   }
@@ -40,6 +38,12 @@ export class TodoListPage implements OnInit {
   addTodo(todo: Todo) {
     this.store.dispatch(new actions.AddTodo(todo));
     this.isAddingTodo = false;
+  }
+
+  goToTodo(todo: Todo) {
+    this.navCtrl.push('TodoItemPage', {
+      id: todo.id,
+    });
   }
 
 }

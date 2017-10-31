@@ -7,22 +7,24 @@ import { reducer as reducers } from './reducers';
 import { TodoEffects } from './effects';
 import { ListComponent } from './components/list/list.component';
 import { AddComponent } from './components/add/add.component';
+import { EditComponent } from './components/edit/edit.component';
 
 @NgModule({
   imports: [
     CommonModule,
     StoreModule.forFeature('todos', reducers),
     EffectsModule.forFeature([TodoEffects]),
-    IonicModule.forRoot(ListComponent),
-    IonicModule.forRoot(AddComponent),
+    IonicModule,
   ],
   declarations: [
     ListComponent,
     AddComponent,
+    EditComponent,
   ],
   exports: [
     ListComponent,
     AddComponent,
+    EditComponent,
   ],
 })
 export class TodosModule {}

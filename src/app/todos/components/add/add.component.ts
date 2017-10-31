@@ -7,7 +7,6 @@ import { Todo } from '../../models';
   templateUrl: 'add.component.html'
 })
 export class AddComponent {
-
   @Output() onTodoSubmitted = new EventEmitter<Todo>();
   todo: FormGroup;
 
@@ -19,6 +18,7 @@ export class AddComponent {
 
   addTodo() {
     const newTodo: Todo = {
+      id: null,
       title: this.todo.value.title,
       complete: false,
       created: `${Date.now()}`,
