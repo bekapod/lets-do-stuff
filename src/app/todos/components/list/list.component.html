@@ -2,7 +2,7 @@
   <ion-item-sliding *ngFor="let todo of todos">
     <ion-item>
       <ion-label>{{ todo.title }}</ion-label>
-      <ion-checkbox [checked]="todo.complete"></ion-checkbox>
+      <ion-checkbox [checked]="todo.complete" (ionChange)="setComplete($event, todo)"></ion-checkbox>
     </ion-item>
 
     <ion-item-options side="right">

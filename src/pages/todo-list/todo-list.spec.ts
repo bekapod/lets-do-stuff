@@ -126,4 +126,16 @@ describe('TodoListPage', () => {
     });
     expect(instance.navCtrl.push).toHaveBeenCalledWith('TodoItemPage', { id: '1' });
   });
+
+  it('should dispatch an SAVE_TODO action when todo has been edited', () => {
+    const editedTodo: Todo = {
+      id: '2',
+      title: 'New todo',
+      created: 'Now',
+      complete: true,
+    };
+    instance.editTodo(editedTodo);
+
+    expect(store.dispatch).toBeCalledWith(new actions.SaveTodo(editedTodo));
+  });
 });

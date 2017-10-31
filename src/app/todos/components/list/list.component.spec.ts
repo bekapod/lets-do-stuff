@@ -92,7 +92,7 @@ describe('ListComponent', () => {
   });
 
   it('should should emit an onTodoEdited event with the todo when edit button is clicked', () => {
-    spyOn(instance.onTodoEdited, 'emit').and.callThrough();
+    spyOn(instance.onTodoEditClicked, 'emit').and.callThrough();
 
     const todos: Todo[] = [
       { id: '1', title: 'Item 1', complete: false, created: '' },
@@ -104,6 +104,28 @@ describe('ListComponent', () => {
 
     const button = fixture.debugElement.query(By.css('ion-item-sliding:nth-child(2) ion-item-options[side="right"] button.edit-todo'));
     button.triggerEventHandler('click', null);
-    expect(instance.onTodoEdited.emit).toBeCalledWith(todos[1]);
+    expect(instance.onTodoEditClicked.emit).toBeCalledWith(todos[1]);
+  });
+
+  it('should emit an onTodoEdited event with correct complete state when checkbox value is changed', () => {
+    spyOn(instance.onTodoEdited, 'emit').and.callThrough();
+    spyOn(instance, 'setComplete').and.callThrough();
+
+    const todos: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: '' },
+      { id: '2', title: 'Item 2', complete: false, created: '' },
+      { id: '3', title: 'Item 3', complete: false, created: '' },
+    ];
+    instance.todos = todos;
+    fixture.detectChanges();
+
+    const checkbox = fixture.debugElement.query(By.css('ion-item-sliding:first-child ion-checkbox'));
+    checkbox.triggerEventHandler('ionChange', { checked: true });
+
+    expect(instance.setComplete).toHaveBeenCalledWith({ checked: true }, todos[0]);
+    expect(instance.onTodoEdited.emit).toHaveBeenCalledWith({
+      ...todos[0],
+      complete: true,
+    });
   });
 });

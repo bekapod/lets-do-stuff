@@ -46,4 +46,7 @@ export class TodoListPage {
     });
   }
 
+  editTodo(editedTodo: Todo) {
+    this.store.dispatch(new actions.SaveTodo(editedTodo));
+  }
 }

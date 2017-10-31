@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Checkbox } from 'ionic-angular';
 import { Todo } from '../../models';
 
 @Component({
@@ -7,9 +8,17 @@ import { Todo } from '../../models';
 })
 export class ListComponent {
   @Input() todos: Todo[];
+  @Output() onTodoEditClicked = new EventEmitter<Todo>();
   @Output() onTodoEdited = new EventEmitter<Todo>();
 
   editTodo(todo: Todo) {
-    this.onTodoEdited.emit(todo);
+    this.onTodoEditClicked.emit(todo);
+  }
+
+  setComplete(checkbox: Checkbox, todo: Todo) {
+    this.onTodoEdited.emit({
+      ...todo,
+      complete: checkbox.checked,
+    });
   }
 }
