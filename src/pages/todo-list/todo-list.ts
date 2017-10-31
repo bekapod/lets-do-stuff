@@ -40,13 +40,17 @@ export class TodoListPage {
     this.isAddingTodo = false;
   }
 
+  editTodo(editedTodo: Todo) {
+    this.store.dispatch(new actions.SaveTodo(editedTodo));
+  }
+
+  deleteTodo(deletedTodo: Todo) {
+    this.store.dispatch(new actions.DeleteTodo(deletedTodo));
+  }
+
   goToTodo(todo: Todo) {
     this.navCtrl.push('TodoItemPage', {
       id: todo.id,
     });
-  }
-
-  editTodo(editedTodo: Todo) {
-    this.store.dispatch(new actions.SaveTodo(editedTodo));
   }
 }

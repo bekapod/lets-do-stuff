@@ -119,4 +119,21 @@ describe('TodoItemPage', () => {
     instance.editTodo(todo);
     expect(store.dispatch).toHaveBeenCalledWith(new actions.SaveTodo(todo));
   });
+
+  it('should dispatch a DELETE_TODO action when a deleted todo has been received', () => {
+    const todo = {
+      id: '1',
+      title: 'Deleted todo',
+      created: 'now',
+      complete: false,
+    };
+    instance.deleteTodo(todo);
+    expect(store.dispatch).toHaveBeenCalledWith(new actions.DeleteTodo(todo));
+  });
+
+  it('should set the navigation root to TodoListPage once todo has been deleted', () => {
+    spyOn(instance.navCtrl, 'setRoot');
+    store.dispatch(new actions.DeleteTodoSucceeded());
+    expect(instance.navCtrl.setRoot).toHaveBeenCalledWith('TodoListPage');
+  });
 });

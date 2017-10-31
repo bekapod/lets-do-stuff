@@ -7,6 +7,8 @@ export const ADD_TODO = '[Todos] Add';
 export const ADD_TODO_SUCCEEDED = '[Todos] Add: Succeeded';
 export const SAVE_TODO = '[Todos] Save';
 export const SAVE_TODO_SUCCEEDED = '[Todos] Save: Succeeded';
+export const DELETE_TODO = '[Todos] Delete';
+export const DELETE_TODO_SUCCEEDED = '[Todos] Delete: Succeeded';
 export const SET_CURRENT_TODO = '[Todos] Set Current Todo';
 
 export class FetchTodos implements Action {
@@ -37,6 +39,16 @@ export class SaveTodo implements Action {
 
 export class SaveTodoSucceeded implements Action {
   readonly type = SAVE_TODO_SUCCEEDED;
+}
+
+export class DeleteTodo implements Action {
+  readonly type = DELETE_TODO;
+
+  constructor(public payload: Todo) {}
+}
+
+export class DeleteTodoSucceeded implements Action {
+  readonly type = DELETE_TODO_SUCCEEDED;
 }
 
 export class SetCurrentTodo implements Action {

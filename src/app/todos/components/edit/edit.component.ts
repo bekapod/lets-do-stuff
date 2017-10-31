@@ -10,6 +10,7 @@ import { Todo } from '../../models';
 export class EditComponent implements OnChanges {
   @Input() todo: Todo;
   @Output() onTodoEdited = new EventEmitter<Todo>();
+  @Output() onTodoDeleted = new EventEmitter<Todo>();
   edit: FormGroup;
   isValid: boolean = false;
 
@@ -43,5 +44,9 @@ export class EditComponent implements OnChanges {
 
     const editedTodo: Todo = { ...this.todo, ...this.edit.value };
     this.onTodoEdited.emit(editedTodo);
+  }
+
+  deleteTodo() {
+    this.onTodoDeleted.emit(this.todo);
   }
 }

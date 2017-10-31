@@ -16,7 +16,12 @@
 <ion-content padding>
   <todos-add *ngIf="isAddingTodo" (onTodoSubmitted)="addTodo($event)"></todos-add>
 
-  <todos-list [todos]="todos" (onTodoEditClicked)="goToTodo($event)" (onTodoEdited)="editTodo($event)"></todos-list>
+  <todos-list
+    [todos]="todos"
+    (onTodoEditClicked)="goToTodo($event)"
+    (onTodoEdited)="editTodo($event)"
+    (onTodoDeleted)="deleteTodo($event)"
+  ></todos-list>
 
   <ion-fab bottom center>
     <button ion-fab title="Add todo" color="primary" (click)="toggleAddTodo()" *ngIf="!isAddingTodo">

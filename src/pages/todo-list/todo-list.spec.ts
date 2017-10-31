@@ -138,4 +138,16 @@ describe('TodoListPage', () => {
 
     expect(store.dispatch).toBeCalledWith(new actions.SaveTodo(editedTodo));
   });
+
+  it('should dispatch a DELETE_TODO action when todo has been deleted', () => {
+    const deletedTodo: Todo = {
+      id: '2',
+      title: 'New todo',
+      created: 'Now',
+      complete: true,
+    };
+    instance.deleteTodo(deletedTodo);
+
+    expect(store.dispatch).toBeCalledWith(new actions.DeleteTodo(deletedTodo));
+  });
 });

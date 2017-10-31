@@ -53,7 +53,7 @@ describe('Todos Reducer', () => {
 
   it('should not affect state when SAVE_TODO is dispatched', () => {
     const payload: Todo = {
-      id: null,
+      id: '1',
       title: 'New todo',
       complete: false,
       created: 'now',
@@ -66,6 +66,26 @@ describe('Todos Reducer', () => {
 
   it('should not affect state when SAVE_TODO_SUCCEEDED is dispatched', () => {
     const action = new actions.SaveTodoSucceeded();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when DELETE_TODO is dispatched', () => {
+    const payload: Todo = {
+      id: '1',
+      title: 'New todo',
+      complete: false,
+      created: 'now',
+    };
+    const action = new actions.DeleteTodo(payload);
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when DELETE_TODO_SUCCEEDED is dispatched', () => {
+    const action = new actions.DeleteTodoSucceeded();
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
     });

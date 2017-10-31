@@ -52,6 +52,18 @@ export function reducer(state = initialState, action: any): State {
       };
     }
 
+    case todos.DELETE_TODO: {
+      return {
+        ...state,
+      };
+    }
+
+    case todos.DELETE_TODO_SUCCEEDED: {
+      return {
+        ...state,
+      };
+    }
+
     case todos.SET_CURRENT_TODO: {
       return {
         ...state,

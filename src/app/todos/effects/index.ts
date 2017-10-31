@@ -77,4 +77,26 @@ export class TodoEffects {
           });
       })
     ));
+
+  @Effect()
+  deleteTodo$ = this.action$
+    .ofType<todos.DeleteTodo>(todos.DELETE_TODO)
+    .map(action => action.payload)
+    .switchMap(payload => (
+      Observable.create((observer) => {
+        observer.next({ type: rootLoading.SHOW });
+
+        this.db.object(`/todos/${payload.id}`)
+          .remove()
+          .then(() => {
+            observer.next({ type: todos.DELETE_TODO_SUCCEEDED });
+            observer.next({ type: rootMessages.ADD_SUCCESS, payload: 'Item deleted' });
+            observer.next({ type: rootLoading.HIDE });
+          })
+          .catch((error: any) => {
+            observer.next({ type: rootMessages.ADD_ERROR, payload: error });
+            observer.next({ type: rootLoading.HIDE });
+          });
+      })
+    ));
 }

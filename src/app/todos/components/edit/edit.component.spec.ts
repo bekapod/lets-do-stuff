@@ -141,4 +141,22 @@ describe('AddComponent', () => {
     form.triggerEventHandler('ngSubmit', null);
     expect(emitSpy).not.toBeCalled();
   });
+
+  it('should emit an onTodoDeleted event when deleteTodo is called', () => {
+    const emitSpy = spyOn(instance.onTodoDeleted, 'emit');
+    const todo: Todo = {
+      id: '1',
+      title: 'Todo item',
+      description: 'Description of todo item.',
+      complete: false,
+      created: 'now',
+    };
+
+    instance.ngOnChanges({
+      todo: new SimpleChange(null, todo, true),
+    });
+    fixture.detectChanges();
+    instance.deleteTodo();
+    expect(emitSpy).toBeCalledWith(todo);
+  });
 });

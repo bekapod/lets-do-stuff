@@ -3,14 +3,17 @@
     <ion-item>
       <ion-label>
         <span class="Todo-title">{{ todo.title }}</span>
-        <p class="Todo-description">{{ todo.description }}</p>
+        <p *ngIf="todo.description" class="Todo-description">{{ todo.description }}</p>
       </ion-label>
       <ion-checkbox [checked]="todo.complete" (ionChange)="setComplete($event, todo)"></ion-checkbox>
     </ion-item>
 
     <ion-item-options side="right">
-      <button class="edit-todo" ion-button icon-only (click)="editTodo(todo)">
+      <button class="Todo-edit" ion-button icon-only (click)="editTodo(todo)">
         <ion-icon name="create"></ion-icon>
+      </button>
+      <button class="Todo-delete" color="danger" ion-button icon-only (click)="deleteTodo(todo)">
+        <ion-icon name="trash"></ion-icon>
       </button>
     </ion-item-options>
   </ion-item-sliding>

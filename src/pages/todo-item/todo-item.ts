@@ -44,10 +44,17 @@ export class TodoItemPage {
     this.action$.ofType(actions.SAVE_TODO_SUCCEEDED).subscribe(() => {
       this.navCtrl.setRoot('TodoListPage');
     });
+
+    this.action$.ofType(actions.DELETE_TODO_SUCCEEDED).subscribe(() => {
+      this.navCtrl.setRoot('TodoListPage');
+    });
   }
 
   editTodo(editedTodo) {
     this.store.dispatch(new actions.SaveTodo(editedTodo));
   }
 
+  deleteTodo(deletedTodo) {
+    this.store.dispatch(new actions.DeleteTodo(deletedTodo));
+  }
 }

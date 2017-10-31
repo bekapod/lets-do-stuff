@@ -10,9 +10,14 @@ export class ListComponent {
   @Input() todos: Todo[];
   @Output() onTodoEditClicked = new EventEmitter<Todo>();
   @Output() onTodoEdited = new EventEmitter<Todo>();
+  @Output() onTodoDeleted= new EventEmitter<Todo>();
 
   editTodo(todo: Todo) {
     this.onTodoEditClicked.emit(todo);
+  }
+
+  deleteTodo(todo: Todo) {
+    this.onTodoDeleted.emit(todo);
   }
 
   setComplete(checkbox: Checkbox, todo: Todo) {
