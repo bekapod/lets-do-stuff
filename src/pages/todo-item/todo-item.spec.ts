@@ -103,10 +103,10 @@ describe('TodoItemPage', () => {
     expect(instance.todo.title).toBe('Todo');
   });
 
-  it('should redirect to TodoListPage once todo has been saved', () => {
-    spyOn(instance.navCtrl, 'push');
+  it('should set the navigation root to TodoListPage once todo has been saved', () => {
+    spyOn(instance.navCtrl, 'setRoot');
     store.dispatch(new actions.SaveTodoSucceeded());
-    expect(instance.navCtrl.push).toHaveBeenCalledWith('TodoListPage');
+    expect(instance.navCtrl.setRoot).toHaveBeenCalledWith('TodoListPage');
   });
 
   it('should dispatch a SAVE_TODO action when an edited todo has been received', () => {

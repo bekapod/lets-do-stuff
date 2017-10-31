@@ -42,7 +42,7 @@ export class TodoItemPage {
     });
 
     this.action$.ofType(actions.SAVE_TODO_SUCCEEDED).subscribe(() => {
-      this.navCtrl.push('TodoListPage');
+      this.navCtrl.setRoot('TodoListPage');
     });
   }
 
