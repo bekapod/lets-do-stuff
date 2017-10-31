@@ -6,7 +6,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import * as rootMessages from '../../actions/messages';
 import * as rootLoading from '../../actions/loading';
 import * as todos from '../actions';
-import { NavController } from 'ionic-angular';
 
 @Injectable()
 export class TodoEffects {

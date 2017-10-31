@@ -73,8 +73,10 @@ export const getTodos = createSelector(
 
 export const getCurrentTodo = createSelector(
   getTodosState,
-  (state: State) => <Todo>state.items[state.currentItem],
+  (state: State) => getTodoById(state, state.currentItem),
 );
+
+export const getTodoById = (state: State, id: string) => state.items[id];
 
 export const mapToArray = (items: TodoList) => (
   pathOr(false, ['length'], Object.keys(items))

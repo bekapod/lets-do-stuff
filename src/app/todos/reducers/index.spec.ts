@@ -51,6 +51,34 @@ describe('Todos Reducer', () => {
     });
   });
 
+  it('should not affect state when SAVE_TODO is dispatched', () => {
+    const payload: Todo = {
+      id: null,
+      title: 'New todo',
+      complete: false,
+      created: 'now',
+    };
+    const action = new actions.SaveTodo(payload);
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when SAVE_TODO_SUCCEEDED is dispatched', () => {
+    const action = new actions.SaveTodoSucceeded();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should add the id of the current item to state when SET_CURRENT_TODO is dispatched', () => {
+    const action = new actions.SetCurrentTodo('item-id');
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+      currentItem: 'item-id',
+    });
+  });
+
   describe('mapToArray', () => {
     it('should convert a TodoList into an array of Todo\'s', () => {
       const todoList: TodoList = {
@@ -85,6 +113,21 @@ describe('Todos Reducer', () => {
         todos[2],
         todos[0],
       ]);
+    });
+  });
+
+  describe('getTodoById', () => {
+    it('should retrieve the correct todo by the id passed in', () => {
+      const state: fromTodos.State = {
+        items: {
+          '1': { id: '1', title: 'Item 1', complete: false, created: '' },
+          '2': { id: '2', title: 'Item 2', complete: false, created: '' },
+          '3': { id: '3', title: 'Item 3', complete: false, created: '' },
+        },
+        currentItem: '2',
+      };
+
+      expect(fromTodos.getTodoById(state, '2')).toEqual(state.items['2']);
     });
   });
 });

@@ -105,7 +105,7 @@ describe('MyAppComponent', () => {
       expect(instance.toastCtrl.create).toBeCalledWith({
         message,
         duration: 3000,
-        dismissOnPageChange: true,
+        dismissOnPageChange: false,
         cssClass: 'app-toast-error',
       });
     });

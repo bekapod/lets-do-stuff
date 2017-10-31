@@ -31,8 +31,8 @@ describe('TodoListPage', () => {
         TodoListPage,
       ],
       providers: [
-        { provide: NavController, useValue: NavMock },
-        { provide: NavParams, useValue: NavParamsMock },
+        { provide: NavController, useClass: NavMock },
+        { provide: NavParams, useClass: NavParamsMock },
       ]
     }).compileComponents();
   }));
@@ -114,5 +114,16 @@ describe('TodoListPage', () => {
 
     expect(store.dispatch).toBeCalledWith(new actions.AddTodo(newTodo));
     expect(instance.isAddingTodo).toBe(false);
+  });
+
+  it('should redirect to the correct todo item page when goToTodo is called', () => {
+    spyOn(instance.navCtrl, 'push');
+    instance.goToTodo({
+      id: '1',
+      title: 'Todo item',
+      created: 'now',
+      complete: false,
+    });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith('TodoItemPage', { id: '1' });
   });
 });

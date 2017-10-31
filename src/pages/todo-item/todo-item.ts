@@ -1,8 +1,7 @@
+import { pathOr } from 'ramda';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { pathOr } from 'ramda';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -21,15 +20,13 @@ import { Todo } from '../../app/todos/models';
 export class TodoItemPage {
 
   todo: Todo;
-  editForm: FormGroup;
+  destroy$: Subject<boolean> = new Subject();
   private todo$: Observable<Todo>;
-  private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private store: Store<fromTodos.State>,
-    private formBuilder: FormBuilder,
     private action$: Actions,
   ) {
     this.store.dispatch(new actions.SetCurrentTodo(this.navParams.get('id')));
@@ -37,11 +34,10 @@ export class TodoItemPage {
     this.todo$ = this.store.select(fromTodos.getCurrentTodo);
 
     this.todo$.takeUntil(this.destroy$).subscribe(value => {
-      this.todo = value;
-
-      if (pathOr(false, ['title'], this.todo)) {
-        this.editForm = this.createEditForm();
+      if (pathOr(false, ['title'], value)) {
+        this.todo = value;
         this.destroy$.next(true);
+        this.destroy$.unsubscribe();
       }
     });
 
@@ -50,15 +46,7 @@ export class TodoItemPage {
     });
   }
 
-  createEditForm() {
-    return this.formBuilder.group({
-      title: [pathOr('', ['title'], this.todo), Validators.required],
-      description: [pathOr('', ['description'], this.todo)],
-    });
-  }
-
-  editTodo() {
-    const editedTodo: Todo = { ...this.todo, ...this.editForm.value };
+  editTodo(editedTodo) {
     this.store.dispatch(new actions.SaveTodo(editedTodo));
   }
 

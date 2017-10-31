@@ -7,6 +7,7 @@ import { reducer as reducers } from './reducers';
 import { TodoEffects } from './effects';
 import { ListComponent } from './components/list/list.component';
 import { AddComponent } from './components/add/add.component';
+import { EditComponent } from './components/edit/edit.component';
 
 @NgModule({
   imports: [
@@ -18,10 +19,12 @@ import { AddComponent } from './components/add/add.component';
   declarations: [
     ListComponent,
     AddComponent,
+    EditComponent,
   ],
   exports: [
     ListComponent,
     AddComponent,
+    EditComponent,
   ],
 })
 export class TodosModule {}
