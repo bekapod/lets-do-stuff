@@ -56,7 +56,7 @@ export class MyAppComponent implements OnInit {
     const toast = this.toastCtrl.create({
       message,
       duration: 3000,
-      dismissOnPageChange: true,
+      dismissOnPageChange: false,
       cssClass: `app-toast-${messageType}`,
     });
 

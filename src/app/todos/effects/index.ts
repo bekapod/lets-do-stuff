@@ -6,12 +6,13 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import * as rootMessages from '../../actions/messages';
 import * as rootLoading from '../../actions/loading';
 import * as todos from '../actions';
+import { NavController } from 'ionic-angular';
 
 @Injectable()
 export class TodoEffects {
   constructor(
     private action$: Actions,
-    public db: AngularFireDatabase
+    private db: AngularFireDatabase,
   ) {}
 
   @Effect()
@@ -47,6 +48,28 @@ export class TodoEffects {
           .set({ ...payload, id })
           .then(() => {
             observer.next({ type: todos.ADD_TODO_SUCCEEDED });
+            observer.next({ type: rootLoading.HIDE });
+          })
+          .catch((error: any) => {
+            observer.next({ type: rootMessages.ADD_ERROR, payload: error });
+            observer.next({ type: rootLoading.HIDE });
+          });
+      })
+    ));
+
+  @Effect()
+  saveTodo$ = this.action$
+    .ofType<todos.SaveTodo>(todos.SAVE_TODO)
+    .map(action => action.payload)
+    .switchMap(payload => (
+      Observable.create((observer) => {
+        observer.next({ type: rootLoading.SHOW });
+
+        this.db.object(`/todos/${payload.id}`)
+          .update(payload)
+          .then(() => {
+            observer.next({ type: todos.SAVE_TODO_SUCCEEDED });
+            observer.next({ type: rootMessages.ADD_SUCCESS, payload: 'Item saved' });
             observer.next({ type: rootLoading.HIDE });
           })
           .catch((error: any) => {

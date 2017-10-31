@@ -13,8 +13,7 @@ import { AddComponent } from './components/add/add.component';
     CommonModule,
     StoreModule.forFeature('todos', reducers),
     EffectsModule.forFeature([TodoEffects]),
-    IonicModule.forRoot(ListComponent),
-    IonicModule.forRoot(AddComponent),
+    IonicModule,
   ],
   declarations: [
     ListComponent,

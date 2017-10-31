@@ -5,6 +5,7 @@ import { Todo, TodoList } from '../models/';
 describe('Todos Reducer', () => {
   const initialState: fromTodos.State = {
     items: {},
+    currentItem: null,
   };
 
   it('should not affect state when FETCH_TODOS is dispatched', () => {
