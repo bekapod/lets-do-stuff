@@ -59,8 +59,23 @@ describe('ListComponent', () => {
 
     const items = fixture.debugElement.query(By.css('ion-list')).children;
     const firstItem = items[0];
-    const labelEl = firstItem.query(By.css('ion-label')).nativeElement;
+    const labelEl = firstItem.query(By.css('ion-label .Todo-title')).nativeElement;
     expect(labelEl.textContent).toEqual(todos[0].title);
+  });
+
+  it('should render the todo item\'s description inside an ion-label', () => {
+    const todos: Todo[] = [
+      { id: '1', title: 'Item 1', description: 'Description of todo item', complete: false, created: '' },
+      { id: '2', title: 'Item 2', complete: false, created: '' },
+      { id: '3', title: 'Item 3', complete: false, created: '' },
+    ];
+    instance.todos = todos;
+    fixture.detectChanges();
+
+    const items = fixture.debugElement.query(By.css('ion-list')).children;
+    const firstItem = items[0];
+    const labelEl = firstItem.query(By.css('ion-label .Todo-description')).nativeElement;
+    expect(labelEl.textContent).toEqual(todos[0].description);
   });
 
   it('should set checked to false on uncompleted todo items', () => {
