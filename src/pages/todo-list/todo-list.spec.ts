@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
+import { Actions } from '@ngrx/effects';
 import { NavController, NavParams } from 'ionic-angular';
 import { TodoListPage } from './todo-list';
 import * as fromRoot from '../../app/reducers';
@@ -33,6 +34,7 @@ describe('TodoListPage', () => {
       providers: [
         { provide: NavController, useClass: NavMock },
         { provide: NavParams, useClass: NavParamsMock },
+        Actions,
       ]
     }).compileComponents();
   }));
@@ -164,5 +166,11 @@ describe('TodoListPage', () => {
     instance.deleteTodo(deletedTodo);
 
     expect(store.dispatch).toBeCalledWith(new actions.DeleteTodo(deletedTodo));
+  });
+
+  it('should dispatch a FETCH_TODOS action when doRefresh is called', () => {
+    instance.doRefresh(null);
+    expect(store.dispatch).toHaveBeenCalledWith(new actions.FetchTodos());
+    expect(instance.refreshComplete$).toBeTruthy();
   });
 });

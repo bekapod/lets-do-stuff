@@ -1,4 +1,8 @@
-<ion-list class="todos-list" reorder="true" (ionItemReorder)="reorderTodos($event)">
+<ion-list
+  class="todos-list"
+  reorder="true"
+  (ionItemReorder)="reorderTodos($event)"
+>
   <ion-item-sliding *ngFor="let todo of todos">
     <ion-item no-padding>
       <ion-label class="Todo">
