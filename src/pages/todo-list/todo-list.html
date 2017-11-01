@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Todo List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <todos-add *ngIf="isAddingTodo" (onTodoSubmitted)="addTodo($event)"></todos-add>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <todos-list
+    [todos]="todos"
+    (onTodoEditClicked)="goToTodo($event)"
+    (onTodoEdited)="editTodo($event)"
+    (onTodoDeleted)="deleteTodo($event)"
+    (onTodosReordered)="editAllTodos($event)"
+  ></todos-list>
+
+  <ion-fab bottom center>
+    <button ion-fab title="Add todo" color="secondary" (click)="toggleAddTodo()" *ngIf="!isAddingTodo">
+      <ion-icon name="add"></ion-icon>
+    </button>
+
+    <button ion-fab title="Cancel add todo" color="danger" (click)="toggleAddTodo()" *ngIf="isAddingTodo">
+      <ion-icon name="close"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

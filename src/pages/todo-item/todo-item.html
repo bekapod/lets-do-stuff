@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ todo?.title }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <todos-edit
+    [todo]="todo"
+    (onTodoEdited)="editTodo($event)"
+    (onTodoDeleted)="deleteTodo($event)"
+  ></todos-edit>
+</ion-content>

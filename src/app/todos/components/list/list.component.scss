@@ -1,0 +1,37 @@
+todos-list {
+  .Todo {
+    position: relative;
+    min-height: 35px;
+
+    ion-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &-description {
+      margin-top: $content-margin / 2;
+    }
+
+    &-dueDate {
+      background-color: color($colors, light);
+
+      &.is-due {
+        color: white;
+        background-color: color($colors, danger);
+      }
+
+      &.is-nearly-due {
+        background-color: color($colors, warning);
+      }
+    }
+  }
+
+  .item.item-md .checkbox-md {
+    margin-right: 18px;
+  }
+
+  ion-item-options .button:last-child {
+    padding-right: 0.3em;
+  }
+}

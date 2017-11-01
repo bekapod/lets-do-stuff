@@ -1,0 +1,26 @@
+<form [formGroup]="edit" (ngSubmit)="editTodo()">
+  <ion-item no-padding>
+    <ion-label stacked>Title</ion-label>
+    <ion-input type="text" formControlName="title"></ion-input>
+  </ion-item>
+  <p
+    *ngIf="edit.get('title').touched && edit.get('title').invalid"
+    class="Message-error"
+  >
+    Title is required.
+  </p>
+
+  <ion-item no-padding>
+    <ion-label stacked>Description</ion-label>
+    <ion-textarea formControlName="description"></ion-textarea>
+  </ion-item>
+
+  <ion-item no-padding>
+    <ion-label stacked>Due Date</ion-label>
+    <ion-datetime displayFormat="D/M/YYYY" formControlName="dueDate"></ion-datetime>
+  </ion-item>
+
+  <button type="submit" ion-button full margin-top [disabled]="!isValid">Save</button>
+</form>
+
+<button ion-button full margin-top color="danger" (click)="deleteTodo()">Delete</button>

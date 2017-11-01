@@ -1,0 +1,39 @@
+<ion-list
+  class="todos-list"
+  reorder="true"
+  (ionItemReorder)="reorderTodos($event)"
+>
+  <ion-item-sliding *ngFor="let todo of todos">
+    <ion-item no-padding>
+      <ion-label class="Todo">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div class="Todo-title">{{ todo.title }}</div>
+              <p *ngIf="todo.description" class="Todo-description">{{ todo.description }}</p>
+            </ion-col>
+            <ion-col col-auto>
+                <ion-chip *ngIf="todo.dueDate" class="Todo-dueDate" [ngClass]="getDueDateClass(todo)">
+                    <ion-icon *ngIf="getDueDateClass(todo) === 'is-due'" name="alert" color="danger"></ion-icon>
+                    <ion-icon *ngIf="getDueDateClass(todo) === 'is-nearly-due'" name="time" color="warning"></ion-icon>
+                    <ion-icon *ngIf="getDueDateClass(todo) !== 'is-due' && getDueDateClass(todo) !== 'is-nearly-due'" name="time" color="light"></ion-icon>
+
+                    <ion-label>{{ todo.dueDate }}</ion-label>
+                  </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-label>
+      <ion-checkbox [checked]="todo.complete" (ionChange)="setComplete($event, todo)"></ion-checkbox>
+    </ion-item>
+
+    <ion-item-options side="right">
+      <button class="Todo-edit" ion-button icon-only (click)="editTodo(todo)">
+        <ion-icon name="create"></ion-icon>
+      </button>
+      <button class="Todo-delete" color="danger" ion-button icon-only (click)="deleteTodo(todo)">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
