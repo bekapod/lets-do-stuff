@@ -24,7 +24,7 @@ export class TodoListPage {
     public navParams: NavParams,
     private store: Store<fromTodos.State>,
   ) {
-    this.todos$ = this.store.select(fromTodos.getTodosSortedByCreated);
+    this.todos$ = this.store.select(fromTodos.getTodosSortedByOrder);
 
     this.todos$.subscribe(value => {
       this.todos = value;
@@ -42,6 +42,10 @@ export class TodoListPage {
 
   editTodo(editedTodo: Todo) {
     this.store.dispatch(new actions.SaveTodo(editedTodo));
+  }
+
+  editAllTodos(editedTodos: Todo[]) {
+    this.store.dispatch(new actions.SaveAllTodos(editedTodos));
   }
 
   deleteTodo(deletedTodo: Todo) {

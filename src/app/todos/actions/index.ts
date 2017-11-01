@@ -10,6 +10,9 @@ export const ADD_TODO_FAILED = '[Todos] Add: Failed';
 export const SAVE_TODO = '[Todos] Save';
 export const SAVE_TODO_SUCCEEDED = '[Todos] Save: Succeeded';
 export const SAVE_TODO_FAILED = '[Todos] Save: Failed';
+export const SAVE_ALL_TODOS = '[Todos] Save All';
+export const SAVE_ALL_TODOS_SUCCEEDED = '[Todos] Save All: Succeeded';
+export const SAVE_ALL_TODOS_FAILED = '[Todos] Save All: Failed';
 export const DELETE_TODO = '[Todos] Delete';
 export const DELETE_TODO_SUCCEEDED = '[Todos] Delete: Succeeded';
 export const DELETE_TODO_FAILED = '[Todos] Delete: Failed';
@@ -57,6 +60,20 @@ export class SaveTodoFailed implements Action {
   readonly type = SAVE_TODO_FAILED;
 }
 
+export class SaveAllTodos implements Action {
+  readonly type = SAVE_ALL_TODOS;
+
+  constructor(public payload: Todo[]) {}
+}
+
+export class SaveAllTodosSucceeded implements Action {
+  readonly type = SAVE_ALL_TODOS_SUCCEEDED;
+}
+
+export class SaveAllTodosFailed implements Action {
+  readonly type = SAVE_ALL_TODOS_FAILED;
+}
+
 export class DeleteTodo implements Action {
   readonly type = DELETE_TODO;
 
@@ -76,5 +93,3 @@ export class SetCurrentTodo implements Action {
 
   constructor(public payload: string) {}
 }
-
-export type Actions = FetchTodos | FetchTodosSucceeded | FetchTodosFailed | AddTodo | AddTodoSucceeded | AddTodoFailed | SaveTodo | SaveTodoSucceeded | SaveTodoFailed | DeleteTodo | DeleteTodoSucceeded | DeleteTodoFailed | SetCurrentTodo;

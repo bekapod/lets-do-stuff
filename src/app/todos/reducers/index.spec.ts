@@ -18,9 +18,9 @@ describe('Todos Reducer', () => {
 
   it('should replace items with newly fetched items when FETCH_TODOS_SUCCEEDED is dispatched', () => {
     const payload: TodoList = {
-      1: { id: '1', title: 'Item 1', complete: false, created: 'now' },
-      2: { id: '2', title: 'Item 2', complete: false, created: 'now' },
-      3: { id: '3', title: 'Item 3', complete: false, created: 'now' },
+      1: { id: '1', title: 'Item 1', complete: false, created: 'now', order: 1 },
+      2: { id: '2', title: 'Item 2', complete: false, created: 'now', order: 2 },
+      3: { id: '3', title: 'Item 3', complete: false, created: 'now', order: 3 },
     };
 
     const action = new actions.FetchTodosSucceeded(payload);
@@ -54,6 +54,7 @@ describe('Todos Reducer', () => {
       title: 'New todo',
       complete: false,
       created: 'now',
+      order: null,
     };
     const action = new actions.AddTodo(payload);
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
@@ -81,6 +82,7 @@ describe('Todos Reducer', () => {
       title: 'New todo',
       complete: false,
       created: 'now',
+      order: 1,
     };
     const action = new actions.SaveTodo(payload);
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
@@ -102,12 +104,39 @@ describe('Todos Reducer', () => {
     });
   });
 
+  it('should not affect state when SAVE_ALL_TODOS is dispatched', () => {
+    const payload: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: 'now', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: 'now', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: 'now', order: 3 },
+    ];
+    const action = new actions.SaveAllTodos(payload);
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when SAVE_ALL_TODOS_SUCCEEDED is dispatched', () => {
+    const action = new actions.SaveAllTodosSucceeded();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when SAVE_ALL_TODOS_FAILED is dispatched', () => {
+    const action = new actions.SaveAllTodosFailed();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
   it('should not affect state when DELETE_TODO is dispatched', () => {
     const payload: Todo = {
       id: '1',
       title: 'New todo',
       complete: false,
       created: 'now',
+      order: 1,
     };
     const action = new actions.DeleteTodo(payload);
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
@@ -140,9 +169,9 @@ describe('Todos Reducer', () => {
   describe('mapToArray', () => {
     it('should convert a TodoList into an array of Todo\'s', () => {
       const todoList: TodoList = {
-        '1': { id: '1', title: 'Item 1', complete: false, created: '' },
-        '2': { id: '2', title: 'Item 2', complete: false, created: '' },
-        '3': { id: '3', title: 'Item 3', complete: false, created: '' },
+        '1': { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+        '2': { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+        '3': { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
       };
 
       expect(fromTodos.mapToArray(todoList)).toEqual([
@@ -161,9 +190,25 @@ describe('Todos Reducer', () => {
   describe('sortByCreated', () => {
     it('should sort an array of Todo\'s by created date', () => {
       const todos: Todo[] = [
-        { id: '1', title: 'Item 1', complete: false, created: '1508938705101' },
-        { id: '2', title: 'Item 2', complete: false, created: '1508938682679' },
-        { id: '3', title: 'Item 3', complete: false, created: '1508938695272' },
+        { id: '1', title: 'Item 1', complete: false, created: '1508938705101', order: 1 },
+        { id: '2', title: 'Item 2', complete: false, created: '1508938682679', order: 2 },
+        { id: '3', title: 'Item 3', complete: false, created: '1508938695272', order: 3 },
+      ];
+
+      expect(fromTodos.sortByCreated(todos)).toEqual([
+        todos[1],
+        todos[2],
+        todos[0],
+      ]);
+    });
+  });
+
+  describe('sortByOrder', () => {
+    it('should sort an array of Todo\'s by order', () => {
+      const todos: Todo[] = [
+        { id: '1', title: 'Item 1', complete: false, created: '1508938705101', order: 3 },
+        { id: '2', title: 'Item 2', complete: false, created: '1508938682679', order: 1 },
+        { id: '3', title: 'Item 3', complete: false, created: '1508938695272', order: 2 },
       ];
 
       expect(fromTodos.sortByCreated(todos)).toEqual([
@@ -178,9 +223,9 @@ describe('Todos Reducer', () => {
     it('should retrieve the correct todo by the id passed in', () => {
       const state: fromTodos.State = {
         items: {
-          '1': { id: '1', title: 'Item 1', complete: false, created: '' },
-          '2': { id: '2', title: 'Item 2', complete: false, created: '' },
-          '3': { id: '3', title: 'Item 3', complete: false, created: '' },
+          '1': { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+          '2': { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+          '3': { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
         },
         currentItem: '2',
       };

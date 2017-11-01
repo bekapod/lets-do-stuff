@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ListComponent } from './list.component';
 import { Todo } from '../../models';
+import { ReorderIndexes } from '../../../../test-config/mocks-ionic';
 
 describe('ListComponent', () => {
   let fixture: ComponentFixture<ListComponent>;
@@ -37,9 +38,9 @@ describe('ListComponent', () => {
 
   it('should render 3 ion-item\'s when 3 todos are passed', () => {
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: false, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -50,9 +51,9 @@ describe('ListComponent', () => {
 
   it('should render the todo item\'s title inside an ion-label', () => {
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: false, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -65,9 +66,9 @@ describe('ListComponent', () => {
 
   it('should render the todo item\'s description inside an ion-label', () => {
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', description: 'Description of todo item', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: false, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', description: 'Description of todo item', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -80,9 +81,9 @@ describe('ListComponent', () => {
 
   it('should set checked to false on uncompleted todo items', () => {
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: true, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: true, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -94,9 +95,9 @@ describe('ListComponent', () => {
 
   it('should set checked to true on the completed todo items', () => {
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: true, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: true, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -110,9 +111,9 @@ describe('ListComponent', () => {
     spyOn(instance.onTodoEditClicked, 'emit').and.callThrough();
 
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: false, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -127,9 +128,9 @@ describe('ListComponent', () => {
     spyOn(instance, 'setComplete').and.callThrough();
 
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: false, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -148,9 +149,9 @@ describe('ListComponent', () => {
     spyOn(instance.onTodoDeleted, 'emit').and.callThrough();
 
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '' },
-      { id: '2', title: 'Item 2', complete: false, created: '' },
-      { id: '3', title: 'Item 3', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
     ];
     instance.todos = todos;
     fixture.detectChanges();
@@ -160,12 +161,31 @@ describe('ListComponent', () => {
     expect(instance.onTodoDeleted.emit).toBeCalledWith(todos[1]);
   });
 
+  it('should emit an onTodosReordered event when todos are re-ordered', () => {
+    spyOn(instance.onTodosReordered, 'emit').and.callThrough();
+
+    const todos: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
+    ];
+    instance.todos = todos;
+    fixture.detectChanges();
+
+    instance.reorderTodos(new ReorderIndexes(1, 0));
+    expect(instance.onTodosReordered.emit).toHaveBeenCalledWith([
+      { ...todos[1], order: 0 },
+      { ...todos[0], order: 1 },
+      { ...todos[2], order: 2 },
+    ]);
+  });
+
   describe('getDueDateClass', () => {
     const todos: Todo[] = [
-      { id: '1', title: 'Item 1', complete: false, created: '', dueDate: '2017-12-25' },
-      { id: '2', title: 'Item 2', complete: false, created: '', dueDate: '2017-12-26' },
-      { id: '3', title: 'Item 3', complete: false, created: '', dueDate: '2017-12-27' },
-      { id: '4', title: 'Item 4', complete: false, created: '' },
+      { id: '1', title: 'Item 1', complete: false, created: '', dueDate: '2017-12-25', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', dueDate: '2017-12-26', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', dueDate: '2017-12-27', order: 3 },
+      { id: '4', title: 'Item 4', complete: false, created: '', order: 4 },
     ];
     let oldDateNow;
 

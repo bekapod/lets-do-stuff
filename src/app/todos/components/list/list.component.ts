@@ -1,6 +1,7 @@
 import { pathOr } from 'ramda';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Checkbox } from 'ionic-angular';
+import { Checkbox, reorderArray } from 'ionic-angular';
+import { ReorderIndexes } from 'ionic-angular/components/item/item-reorder';
 import { Todo } from '../../models';
 
 @Component({
@@ -11,7 +12,8 @@ export class ListComponent {
   @Input() todos: Todo[];
   @Output() onTodoEditClicked = new EventEmitter<Todo>();
   @Output() onTodoEdited = new EventEmitter<Todo>();
-  @Output() onTodoDeleted= new EventEmitter<Todo>();
+  @Output() onTodoDeleted = new EventEmitter<Todo>();
+  @Output() onTodosReordered = new EventEmitter<Todo[]>();
 
   editTodo(todo: Todo) {
     this.onTodoEditClicked.emit(todo);
@@ -26,6 +28,12 @@ export class ListComponent {
       ...todo,
       complete: checkbox.checked,
     });
+  }
+
+  reorderTodos(reorderIndexes: ReorderIndexes) {
+    const reorderedTodos = reorderArray([...this.todos], reorderIndexes)
+      .map((todo, index) => ({ ...todo, order: index }));
+    this.onTodosReordered.emit(reorderedTodos);
   }
 
   getDueDateClass(todo: Todo): string {

@@ -3,6 +3,7 @@ export interface Todo {
   title: string;
   complete: boolean;
   created: string;
+  order: number;
   description?: string;
   dueDate?: string;
 }

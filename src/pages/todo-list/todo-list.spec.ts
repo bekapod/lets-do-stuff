@@ -52,13 +52,13 @@ describe('TodoListPage', () => {
 
   it('should have new todos sorted by date when todos have been fetched', () => {
     const todoList: TodoList = {
-      '1': { id: '1', title: 'Todo 1', complete: false, created: '1508925020343' },
-      '2': { id: '2', title: 'Todo 2', complete: false, created: '1508925045342' },
-      '3': { id: '3', title: 'Todo 3', complete: false, created: '1508925037299' },
+      '1': { id: '1', title: 'Todo 1', complete: false, created: '1508925020343', order: 2 },
+      '2': { id: '2', title: 'Todo 2', complete: false, created: '1508925045342', order: 3 },
+      '3': { id: '3', title: 'Todo 3', complete: false, created: '1508925037299', order: 1 },
     };
     store.dispatch(new actions.FetchTodosSucceeded(todoList));
     fixture.detectChanges();
-    expect(instance.todos).toEqual([todoList['1'], todoList['3'], todoList['2']]);
+    expect(instance.todos).toEqual([todoList['3'], todoList['1'], todoList['2']]);
   });
 
   it('should show a title', () => {
@@ -104,6 +104,7 @@ describe('TodoListPage', () => {
       title: 'New todo',
       created: 'Now',
       complete: false,
+      order: 1,
     };
 
     instance.isAddingTodo = true;
@@ -123,20 +124,33 @@ describe('TodoListPage', () => {
       title: 'Todo item',
       created: 'now',
       complete: false,
+      order: 1,
     });
     expect(instance.navCtrl.push).toHaveBeenCalledWith('TodoItemPage', { id: '1' });
   });
 
-  it('should dispatch an SAVE_TODO action when todo has been edited', () => {
+  it('should dispatch a SAVE_TODO action when todo has been edited', () => {
     const editedTodo: Todo = {
       id: '2',
       title: 'New todo',
       created: 'Now',
       complete: true,
+      order: 2,
     };
     instance.editTodo(editedTodo);
 
     expect(store.dispatch).toBeCalledWith(new actions.SaveTodo(editedTodo));
+  });
+
+  it('should dispatch an SAVE_ALL_TODOS action when todos have been re-ordered', () => {
+    const reorderedTodos: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: 'now', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: 'now', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: 'now', order: 3 },
+    ];
+    instance.editAllTodos(reorderedTodos);
+
+    expect(store.dispatch).toBeCalledWith(new actions.SaveAllTodos(reorderedTodos));
   });
 
   it('should dispatch a DELETE_TODO action when todo has been deleted', () => {
@@ -145,6 +159,7 @@ describe('TodoListPage', () => {
       title: 'New todo',
       created: 'Now',
       complete: true,
+      order: 2,
     };
     instance.deleteTodo(deletedTodo);
 

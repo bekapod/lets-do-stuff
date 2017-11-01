@@ -1,3 +1,4 @@
+import { reorderArray } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -12,11 +13,11 @@ export class PlatformMock {
     return true;
   }
 
-  public registerBackButtonAction(fn: Function, priority?: number): Function {
+  public registerBackButtonAction(): Function {
     return (() => true);
   }
 
-  public hasFocus(ele: HTMLElement): boolean {
+  public hasFocus(): boolean {
     return true;
   }
 
@@ -28,7 +29,7 @@ export class PlatformMock {
     return true;
   }
 
-  public getElementComputedStyle(container: any): any {
+  public getElementComputedStyle(): any {
     return {
       paddingLeft: '10',
       paddingTop: '10',
@@ -41,7 +42,7 @@ export class PlatformMock {
     return callback;
   }
 
-  public registerListener(ele: any, eventName: string, callback: any): Function {
+  public registerListener(): Function {
     return (() => true);
   }
 
@@ -49,7 +50,7 @@ export class PlatformMock {
     return window;
   }
 
-  public raf(callback: any): number {
+  public raf(): number {
     return 1;
   }
 
@@ -57,7 +58,7 @@ export class PlatformMock {
     return setTimeout(callback, timer);
   }
 
-  public cancelTimeout(id: any) {
+  public cancelTimeout() {
     // do nothing
   }
 
@@ -103,7 +104,7 @@ export class NavMock {
     return true;
   }
 
-  public registerChildNav(nav: any): void {
+  public registerChildNav(): void {
     return ;
   }
 
@@ -111,7 +112,7 @@ export class NavMock {
 
 export class NavParamsMock {
   static returnParam = null;
-  public get(key): any {
+  public get(): any {
     if (NavParamsMock.returnParam) {
        return NavParamsMock.returnParam;
     }
@@ -129,7 +130,7 @@ export class DeepLinkerMock {
 export class ToastControllerMock {
   dismissCb = () => {};
 
-  create(options) {
+  create() {
     return this;
   }
 
@@ -157,7 +158,19 @@ export class LoadingMock {
 }
 
 export class LoadingControllerMock {
-  create(options) {
+  create() {
     return new LoadingMock();
   }
 }
+
+export const ReorderIndexes = (function () {
+  function ReorderIndexes(from, to) {
+      this.from = from;
+      this.to = to;
+  }
+
+  ReorderIndexes.prototype.applyTo = function (array) {
+      reorderArray(array, this);
+  };
+  return ReorderIndexes;
+}());
