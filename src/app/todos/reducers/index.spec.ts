@@ -104,6 +104,32 @@ describe('Todos Reducer', () => {
     });
   });
 
+  it('should not affect state when SAVE_ALL_TODOS is dispatched', () => {
+    const payload: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: 'now', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: 'now', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: 'now', order: 3 },
+    ];
+    const action = new actions.SaveAllTodos(payload);
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when SAVE_ALL_TODOS_SUCCEEDED is dispatched', () => {
+    const action = new actions.SaveAllTodosSucceeded();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when SAVE_ALL_TODOS_FAILED is dispatched', () => {
+    const action = new actions.SaveAllTodosFailed();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
   it('should not affect state when DELETE_TODO is dispatched', () => {
     const payload: Todo = {
       id: '1',
@@ -167,6 +193,22 @@ describe('Todos Reducer', () => {
         { id: '1', title: 'Item 1', complete: false, created: '1508938705101', order: 1 },
         { id: '2', title: 'Item 2', complete: false, created: '1508938682679', order: 2 },
         { id: '3', title: 'Item 3', complete: false, created: '1508938695272', order: 3 },
+      ];
+
+      expect(fromTodos.sortByCreated(todos)).toEqual([
+        todos[1],
+        todos[2],
+        todos[0],
+      ]);
+    });
+  });
+
+  describe('sortByOrder', () => {
+    it('should sort an array of Todo\'s by order', () => {
+      const todos: Todo[] = [
+        { id: '1', title: 'Item 1', complete: false, created: '1508938705101', order: 3 },
+        { id: '2', title: 'Item 2', complete: false, created: '1508938682679', order: 1 },
+        { id: '3', title: 'Item 3', complete: false, created: '1508938695272', order: 2 },
       ];
 
       expect(fromTodos.sortByCreated(todos)).toEqual([

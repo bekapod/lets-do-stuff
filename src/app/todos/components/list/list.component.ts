@@ -31,7 +31,7 @@ export class ListComponent {
   }
 
   reorderTodos(reorderIndexes: ReorderIndexes) {
-    const reorderedTodos = reorderArray(this.todos, reorderIndexes)
+    const reorderedTodos = reorderArray([...this.todos], reorderIndexes)
       .map((todo, index) => ({ ...todo, order: index }));
     this.onTodosReordered.emit(reorderedTodos);
   }

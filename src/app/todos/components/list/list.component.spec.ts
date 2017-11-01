@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ListComponent } from './list.component';
 import { Todo } from '../../models';
+import { ReorderIndexes } from '../../../../test-config/mocks-ionic';
 
 describe('ListComponent', () => {
   let fixture: ComponentFixture<ListComponent>;
@@ -158,6 +159,25 @@ describe('ListComponent', () => {
     const button = fixture.debugElement.query(By.css('ion-item-sliding:nth-child(2) ion-item-options[side="right"] button.Todo-delete'));
     button.triggerEventHandler('click', null);
     expect(instance.onTodoDeleted.emit).toBeCalledWith(todos[1]);
+  });
+
+  it('should emit an onTodosReordered event when todos are re-ordered', () => {
+    spyOn(instance.onTodosReordered, 'emit').and.callThrough();
+
+    const todos: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: '', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: '', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: '', order: 3 },
+    ];
+    instance.todos = todos;
+    fixture.detectChanges();
+
+    instance.reorderTodos(new ReorderIndexes(1, 0));
+    expect(instance.onTodosReordered.emit).toHaveBeenCalledWith([
+      { ...todos[1], order: 0 },
+      { ...todos[0], order: 1 },
+      { ...todos[2], order: 2 },
+    ]);
   });
 
   describe('getDueDateClass', () => {

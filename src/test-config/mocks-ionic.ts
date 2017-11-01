@@ -1,3 +1,4 @@
+import { reorderArray } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -161,3 +162,15 @@ export class LoadingControllerMock {
     return new LoadingMock();
   }
 }
+
+export const ReorderIndexes = (function () {
+  function ReorderIndexes(from, to) {
+      this.from = from;
+      this.to = to;
+  }
+
+  ReorderIndexes.prototype.applyTo = function (array) {
+      reorderArray(array, this);
+  };
+  return ReorderIndexes;
+}());

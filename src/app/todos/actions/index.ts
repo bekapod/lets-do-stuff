@@ -93,5 +93,3 @@ export class SetCurrentTodo implements Action {
 
   constructor(public payload: string) {}
 }
-
-export type Actions = FetchTodos | FetchTodosSucceeded | FetchTodosFailed | AddTodo | AddTodoSucceeded | AddTodoFailed | SaveTodo | SaveTodoSucceeded | SaveTodoFailed | DeleteTodo | DeleteTodoSucceeded | DeleteTodoFailed | SetCurrentTodo;

@@ -129,7 +129,7 @@ describe('TodoListPage', () => {
     expect(instance.navCtrl.push).toHaveBeenCalledWith('TodoItemPage', { id: '1' });
   });
 
-  it('should dispatch an SAVE_TODO action when todo has been edited', () => {
+  it('should dispatch a SAVE_TODO action when todo has been edited', () => {
     const editedTodo: Todo = {
       id: '2',
       title: 'New todo',
@@ -140,6 +140,17 @@ describe('TodoListPage', () => {
     instance.editTodo(editedTodo);
 
     expect(store.dispatch).toBeCalledWith(new actions.SaveTodo(editedTodo));
+  });
+
+  it('should dispatch an SAVE_ALL_TODOS action when todos have been re-ordered', () => {
+    const reorderedTodos: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: 'now', order: 1 },
+      { id: '2', title: 'Item 2', complete: false, created: 'now', order: 2 },
+      { id: '3', title: 'Item 3', complete: false, created: 'now', order: 3 },
+    ];
+    instance.editAllTodos(reorderedTodos);
+
+    expect(store.dispatch).toBeCalledWith(new actions.SaveAllTodos(reorderedTodos));
   });
 
   it('should dispatch a DELETE_TODO action when todo has been deleted', () => {
