@@ -75,6 +75,7 @@ describe('AddComponent', () => {
       complete: false,
       created: 'MOCKED_DATE',
     };
+    const oldDateNow = global.Date.now;
     global.Date.now = jest.fn(() => todo.created);
 
     instance.todo.controls['title'].setValue(todo.title);
@@ -83,5 +84,7 @@ describe('AddComponent', () => {
 
     expect(emitSpy).toBeCalledWith(todo);
     expect(resetSpy).toBeCalled();
+
+    global.Date.now = oldDateNow;
   });
 });

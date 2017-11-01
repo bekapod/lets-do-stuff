@@ -4,6 +4,7 @@ export interface Todo {
   complete: boolean;
   created: string;
   description?: string;
+  dueDate?: string;
 }
 
 export interface TodoList {

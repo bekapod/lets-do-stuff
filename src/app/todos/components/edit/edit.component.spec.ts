@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { EditComponent } from './edit.component';
 import { Todo } from '../../models';
 
-describe('AddComponent', () => {
+describe('EditComponent', () => {
   let fixture: ComponentFixture<EditComponent>;
   let instance: EditComponent;
 
@@ -44,6 +44,11 @@ describe('AddComponent', () => {
     expect(input).toBeTruthy();
   });
 
+  it('should contain a date input for todo due date', () => {
+    const input = fixture.debugElement.query(By.css('ion-datetime[formControlName="dueDate"]'));
+    expect(input).toBeTruthy();
+  });
+
   it('should contain a submit button that is enabled when form is valid', () => {
     const todo: Todo = {
       id: '1',
@@ -75,6 +80,7 @@ describe('AddComponent', () => {
       description: 'Some description.',
       created: 'now',
       complete: false,
+      dueDate: '2017-07-11',
     };
     const newTodo: Todo = {
       id: '2',
@@ -82,6 +88,7 @@ describe('AddComponent', () => {
       description: 'Description of the new todo.',
       created: 'now',
       complete: true,
+      dueDate: '2017-12-25',
     };
     const form = instance.edit;
 
@@ -92,6 +99,7 @@ describe('AddComponent', () => {
     expect(form.value).toEqual({
       title: todo.title,
       description: todo.description,
+      dueDate: todo.dueDate,
     });
 
     instance.ngOnChanges({
@@ -101,6 +109,7 @@ describe('AddComponent', () => {
     expect(form.value).toEqual({
       title: newTodo.title,
       description: newTodo.description,
+      dueDate: newTodo.dueDate,
     });
   });
 
@@ -113,6 +122,7 @@ describe('AddComponent', () => {
       description: 'Description of todo item.',
       complete: false,
       created: 'now',
+      dueDate: '2017-11-23',
     };
 
     instance.ngOnChanges({

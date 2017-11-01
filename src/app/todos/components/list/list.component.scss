@@ -1,6 +1,30 @@
 todos-list {
-  .Todo-description {
-    margin-top: $content-margin / 2;
+  .Todo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 35px;
+
+    &-description {
+      margin-top: $content-margin / 2;
+    }
+
+    &-dueDate {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: color($colors, light);
+
+      &.is-due {
+        color: white;
+        background-color: color($colors, danger);
+      }
+
+      &.is-nearly-due {
+        background-color: color($colors, warning);
+      }
+    }
   }
 
   ion-item-options .button:last-child {

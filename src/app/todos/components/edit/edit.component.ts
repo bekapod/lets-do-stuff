@@ -18,6 +18,7 @@ export class EditComponent implements OnChanges {
     this.edit = this.formBuilder.group({
       title: [pathOr('', ['title'], this.todo), Validators.required],
       description: [pathOr('', ['description'], this.todo)],
+      dueDate: [pathOr('', ['dueDate'], this.todo)],
     });
 
     this.edit.valueChanges.subscribe(() => {
@@ -30,6 +31,7 @@ export class EditComponent implements OnChanges {
     this.edit.setValue({
       title: pathOr('', ['title'], this.todo),
       description: pathOr('', ['description'], this.todo),
+      dueDate: pathOr('', ['dueDate'], this.todo),
     });
   }
 

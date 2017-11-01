@@ -159,4 +159,39 @@ describe('ListComponent', () => {
     button.triggerEventHandler('click', null);
     expect(instance.onTodoDeleted.emit).toBeCalledWith(todos[1]);
   });
+
+  describe('getDueDateClass', () => {
+    const todos: Todo[] = [
+      { id: '1', title: 'Item 1', complete: false, created: '', dueDate: '2017-12-25' },
+      { id: '2', title: 'Item 2', complete: false, created: '', dueDate: '2017-12-26' },
+      { id: '3', title: 'Item 3', complete: false, created: '', dueDate: '2017-12-27' },
+      { id: '4', title: 'Item 4', complete: false, created: '' },
+    ];
+    let oldDateNow;
+
+    beforeAll(() => {
+      oldDateNow = global.Date.now;
+      global.Date.now = jest.fn(() => todos[0].dueDate);
+    });
+
+    afterAll(() => {
+      global.Date.now = oldDateNow;
+    });
+
+    it('should not return any class by default', () => {
+      expect(instance.getDueDateClass(todos[2])).toEqual('');
+    });
+
+    it('should not return any class if due date is not set', () => {
+      expect(instance.getDueDateClass(todos[3])).toEqual('');
+    });
+
+    it('should return "is-due" if todo is due today', () => {
+      expect(instance.getDueDateClass(todos[0])).toEqual('is-due');
+    });
+
+    it('should return "is-nearly-due" if todo is due tomorrow', () => {
+      expect(instance.getDueDateClass(todos[1])).toEqual('is-nearly-due');
+    });
+  });
 });

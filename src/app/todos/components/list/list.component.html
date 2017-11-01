@@ -1,9 +1,16 @@
 <ion-list class="todos-list">
   <ion-item-sliding *ngFor="let todo of todos">
     <ion-item>
-      <ion-label>
-        <span class="Todo-title">{{ todo.title }}</span>
+      <ion-label class="Todo">
+        <div class="Todo-title">{{ todo.title }}</div>
         <p *ngIf="todo.description" class="Todo-description">{{ todo.description }}</p>
+        <ion-chip *ngIf="todo.dueDate" class="Todo-dueDate" [ngClass]="getDueDateClass(todo)">
+          <ion-icon *ngIf="getDueDateClass(todo) === 'is-due'" name="alert" color="danger"></ion-icon>
+          <ion-icon *ngIf="getDueDateClass(todo) === 'is-nearly-due'" name="time" color="warning"></ion-icon>
+          <ion-icon *ngIf="getDueDateClass(todo) !== 'is-due' && getDueDateClass(todo) !== 'is-nearly-due'" name="time" color="light"></ion-icon>
+
+          <ion-label>{{ todo.dueDate }}</ion-label>
+        </ion-chip>
       </ion-label>
       <ion-checkbox [checked]="todo.complete" (ionChange)="setComplete($event, todo)"></ion-checkbox>
     </ion-item>
