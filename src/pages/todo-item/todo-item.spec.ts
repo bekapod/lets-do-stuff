@@ -68,6 +68,7 @@ describe('TodoItemPage', () => {
         title: 'Todo',
         created: 'now',
         complete: false,
+        order: 1,
       },
     };
     store.dispatch(new actions.FetchTodosSucceeded(todoList));
@@ -86,6 +87,7 @@ describe('TodoItemPage', () => {
         title: 'Todo',
         created: 'now',
         complete: false,
+        order: 1,
       },
     }));
     store.dispatch(new actions.SetCurrentTodo('default'));
@@ -97,6 +99,7 @@ describe('TodoItemPage', () => {
         title: 'Another todo',
         created: 'now',
         complete: false,
+        order: 1,
       },
     }));
     store.dispatch(new actions.SetCurrentTodo('default'));
@@ -115,6 +118,7 @@ describe('TodoItemPage', () => {
       title: 'Edited todo',
       created: 'now',
       complete: false,
+      order: 1,
     };
     instance.editTodo(todo);
     expect(store.dispatch).toHaveBeenCalledWith(new actions.SaveTodo(todo));
@@ -126,6 +130,7 @@ describe('TodoItemPage', () => {
       title: 'Deleted todo',
       created: 'now',
       complete: false,
+      order: 1,
     };
     instance.deleteTodo(todo);
     expect(store.dispatch).toHaveBeenCalledWith(new actions.DeleteTodo(todo));

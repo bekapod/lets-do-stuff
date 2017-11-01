@@ -74,6 +74,7 @@ describe('AddComponent', () => {
       title: 'Todo item',
       complete: false,
       created: 'MOCKED_DATE',
+      order: null,
     };
     const oldDateNow = global.Date.now;
     global.Date.now = jest.fn(() => todo.created);

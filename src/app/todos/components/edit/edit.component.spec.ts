@@ -56,6 +56,7 @@ describe('EditComponent', () => {
       description: 'Some description.',
       created: 'now',
       complete: false,
+      order: 1,
     };
     const button = fixture.debugElement.query(By.css('button[type="submit"]'));
     expect(button).toBeTruthy();
@@ -81,6 +82,7 @@ describe('EditComponent', () => {
       created: 'now',
       complete: false,
       dueDate: '2017-07-11',
+      order: 1,
     };
     const newTodo: Todo = {
       id: '2',
@@ -89,6 +91,7 @@ describe('EditComponent', () => {
       created: 'now',
       complete: true,
       dueDate: '2017-12-25',
+      order: 1,
     };
     const form = instance.edit;
 
@@ -123,6 +126,7 @@ describe('EditComponent', () => {
       complete: false,
       created: 'now',
       dueDate: '2017-11-23',
+      order: 1,
     };
 
     instance.ngOnChanges({
@@ -142,6 +146,7 @@ describe('EditComponent', () => {
       description: 'Description of todo item.',
       complete: false,
       created: 'now',
+      order: 1,
     };
 
     instance.ngOnChanges({
@@ -160,6 +165,7 @@ describe('EditComponent', () => {
       description: 'Description of todo item.',
       complete: false,
       created: 'now',
+      order: 1,
     };
 
     instance.ngOnChanges({

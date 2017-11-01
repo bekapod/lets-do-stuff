@@ -22,10 +22,10 @@ export class AddComponent {
       title: this.todo.value.title,
       complete: false,
       created: `${Date.now()}`,
+      order: null,
     };
 
     this.onTodoSubmitted.emit(newTodo);
     this.todo.reset();
   }
-
 }
