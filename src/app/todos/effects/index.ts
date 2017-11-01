@@ -28,6 +28,7 @@ export class TodoEffects {
             observer.next({ type: rootLoading.HIDE });
           }, error => {
             console.error(error);
+            observer.next({ type: todos.FETCH_TODOS_FAILED });
             observer.next({ type: rootMessages.ADD_ERROR, payload: error });
             observer.next({ type: rootLoading.HIDE });
           });
@@ -50,6 +51,7 @@ export class TodoEffects {
             observer.next({ type: rootLoading.HIDE });
           })
           .catch((error: any) => {
+            observer.next({ type: todos.ADD_TODO_FAILED });
             observer.next({ type: rootMessages.ADD_ERROR, payload: error });
             observer.next({ type: rootLoading.HIDE });
           });
@@ -72,6 +74,7 @@ export class TodoEffects {
             observer.next({ type: rootLoading.HIDE });
           })
           .catch((error: any) => {
+            observer.next({ type: todos.SAVE_TODO_FAILED });
             observer.next({ type: rootMessages.ADD_ERROR, payload: error });
             observer.next({ type: rootLoading.HIDE });
           });
@@ -94,6 +97,7 @@ export class TodoEffects {
             observer.next({ type: rootLoading.HIDE });
           })
           .catch((error: any) => {
+            observer.next({ type: todos.DELETE_TODO_FAILED });
             observer.next({ type: rootMessages.ADD_ERROR, payload: error });
             observer.next({ type: rootLoading.HIDE });
           });

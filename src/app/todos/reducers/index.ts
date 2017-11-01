@@ -15,7 +15,13 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: any): State {
   switch (action.type) {
-    case todos.FETCH_TODOS: {
+    case todos.FETCH_TODOS:
+    case todos.ADD_TODO:
+    case todos.ADD_TODO_SUCCEEDED:
+    case todos.SAVE_TODO:
+    case todos.SAVE_TODO_SUCCEEDED:
+    case todos.DELETE_TODO:
+    case todos.DELETE_TODO_SUCCEEDED: {
       return {
         ...state,
       };
@@ -25,42 +31,6 @@ export function reducer(state = initialState, action: any): State {
       return {
         ...state,
         items: action.payload || state.items,
-      };
-    }
-
-    case todos.ADD_TODO: {
-      return {
-        ...state,
-      };
-    }
-
-    case todos.ADD_TODO_SUCCEEDED: {
-      return {
-        ...state,
-      };
-    }
-
-    case todos.SAVE_TODO: {
-      return {
-        ...state,
-      };
-    }
-
-    case todos.SAVE_TODO_SUCCEEDED: {
-      return {
-        ...state,
-      };
-    }
-
-    case todos.DELETE_TODO: {
-      return {
-        ...state,
-      };
-    }
-
-    case todos.DELETE_TODO_SUCCEEDED: {
-      return {
-        ...state,
       };
     }
 

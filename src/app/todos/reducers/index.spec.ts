@@ -31,6 +31,23 @@ describe('Todos Reducer', () => {
     });
   });
 
+  it('should retain the previous state if FETCH_TODOS_SUCCEEDED is dispatched with a falsy value', () => {
+    const payload: TodoList = null;
+
+    const action = new actions.FetchTodosSucceeded(payload);
+
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when FETCH_TODOS_FAILED is dispatched', () => {
+    const action = new actions.FetchTodosFailed();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
   it('should not affect state when ADD_TODO is dispatched', () => {
     const payload: Todo = {
       id: null,
@@ -46,6 +63,13 @@ describe('Todos Reducer', () => {
 
   it('should not affect state when ADD_TODO_SUCCEEDED is dispatched', () => {
     const action = new actions.AddTodoSucceeded();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when ADD_TODO_FAILED is dispatched', () => {
+    const action = new actions.AddTodoFailed();
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
     });
@@ -71,6 +95,13 @@ describe('Todos Reducer', () => {
     });
   });
 
+  it('should not affect state when SAVE_TODO_FAILED is dispatched', () => {
+    const action = new actions.SaveTodoFailed();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
   it('should not affect state when DELETE_TODO is dispatched', () => {
     const payload: Todo = {
       id: '1',
@@ -86,6 +117,13 @@ describe('Todos Reducer', () => {
 
   it('should not affect state when DELETE_TODO_SUCCEEDED is dispatched', () => {
     const action = new actions.DeleteTodoSucceeded();
+    expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
+      ...initialState,
+    });
+  });
+
+  it('should not affect state when DELETE_TODO_FAILED is dispatched', () => {
+    const action = new actions.DeleteTodoFailed();
     expect(fromTodos.reducer(initialState, action)).toEqual(<fromTodos.State>{
       ...initialState,
     });
