@@ -8,11 +8,6 @@
 <ion-content padding>
   <todos-add *ngIf="isAddingTodo" (onTodoSubmitted)="addTodo($event)"></todos-add>
 
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content>
-    </ion-refresher-content>
-  </ion-refresher>
-
   <todos-list
     [todos]="todos"
     (onTodoEditClicked)="goToTodo($event)"

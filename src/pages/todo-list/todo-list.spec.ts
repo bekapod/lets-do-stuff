@@ -167,10 +167,4 @@ describe('TodoListPage', () => {
 
     expect(store.dispatch).toBeCalledWith(new actions.DeleteTodo(deletedTodo));
   });
-
-  it('should dispatch a FETCH_TODOS action when doRefresh is called', () => {
-    instance.doRefresh(null);
-    expect(store.dispatch).toHaveBeenCalledWith(new actions.FetchTodos());
-    expect(instance.refreshComplete$).toBeTruthy();
-  });
 });

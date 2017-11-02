@@ -2,5 +2,7 @@
   "name": "lets-do-stuff",
   "app_id": "370e14da",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
